@@ -144,7 +144,7 @@
 
                     <!-- Tax -->
                     <div class="d-flex justify-content-between mb-2">
-                        <span>Tax (18%)</span>
+                        <span>Tax ({{ $tax_rate }}%)</span>
                         <span>₹{{ number_format($tax, 2) }}</span>
                     </div>
 
@@ -177,7 +177,7 @@
                     <!-- Free Shipping Hint -->
                     @if($shipping > 0)
                     <div class="text-center mb-3 small text-muted">
-                        Add ₹{{ number_format(1000 - $grandTotal, 2) }} more for <strong>FREE shipping</strong>
+                        Add ₹{{ number_format($max_charge_for_shipping - $grandTotal, 2) }} more for <strong>FREE shipping</strong>
                     </div>
                     @endif
 

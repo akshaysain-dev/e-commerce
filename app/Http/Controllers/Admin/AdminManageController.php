@@ -21,7 +21,7 @@ class AdminManageController extends Controller
 		$totalBaseCost = 0;
 		foreach ($orders as $order) {
 			foreach ($order->items as $item) {
-				$totalBaseCost += ($item->price * $item->quantity);
+				$totalBaseCost += ($item->main_price * $item->quantity);
 			}
 		}
 

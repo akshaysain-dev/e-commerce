@@ -107,7 +107,9 @@
                                 </div>
                                 <div>
                                     <div class="fw-bold text-dark">{{ $customer->name }}</div>
-                                    <small class="text-muted" style="font-size: 0.7rem;">ID: #{{ str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</small>
+                                    <small class="text-muted" style="font-size: 0.7rem;">
+                                        ID: #{{ $customer->zoho_id ? str_pad($customer->zoho_id, 5, '0', STR_PAD_LEFT) : str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}
+                                    </small>
                                 </div>
                             </div>
                         </td>

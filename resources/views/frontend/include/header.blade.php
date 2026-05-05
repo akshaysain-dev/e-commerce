@@ -238,3 +238,52 @@
     });
 })();
 </script>
+
+<script>
+let timer;
+
+document.getElementById('globalSearch').addEventListener('keyup', function() {
+    clearTimeout(timer);
+
+    let query = this.value;
+
+    if (query.length < 2) {
+        document.getElementById('searchSuggestions').style.display = 'none';
+        return;
+    }
+
+    timer = setTimeout(() => {
+        fetch(`/search/ajax?q=${query}`)
+        .then(res => res.json())
+        .then(data => {
+            let html = '';
+
+            if (!data || data.length === 0) {
+                html = `<p class="p-2 text-muted">No results found</p>`;
+            } else {
+                data.forEach(item => {
+                    html += `
+                    <a href="/product/${item.id}" class="d-block px-3 py-2 text-decoration-none text-dark border-bottom">
+                        <div class="fw-semibold">${item.name}</div>
+                        <small class="text-muted">₹${item.price ?? 0}</small>
+                    </a>`;
+                });
+            }
+
+            document.getElementById('suggestionList').innerHTML = html;
+            document.getElementById('searchSuggestions').style.display = 'block';
+        })
+        .catch(err => {
+            console.error("Search error:", err);
+        });
+
+    }, 300); // debounce
+});
+
+// Hide on click outside
+document.addEventListener('click', function(e) {
+    if (!document.getElementById('searchWrapper').contains(e.target)) {
+        document.getElementById('searchSuggestions').style.display = 'none';
+    }
+});
+</script>

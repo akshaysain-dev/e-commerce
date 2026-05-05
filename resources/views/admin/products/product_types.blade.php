@@ -2,7 +2,18 @@
 
 @section('title', 'Add Variants')
 
+@section('styles')
+<style>
+    /* ✅ FOOTER FIX */
+    .page-wrapper {
+        min-height: calc(100vh - 120px);
+    }
+</style>
+@endsection
+
 @section('content')
+
+<div class="page-wrapper">
 <div class="container mt-5">
     <div class="row">
         <!-- Add Product Type Form -->
@@ -70,4 +81,6 @@
         </div>
     </div>
 </div>
+</div>
+
 @endsection

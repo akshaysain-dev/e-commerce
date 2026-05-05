@@ -12,10 +12,10 @@
 
     @yield('styles')
 </head>
-<body>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
     @include('admin.include.header')
     
-    <main>
+    <main style="flex: 1;" class="mt-4 mb-4">
         @yield('content')
     </main>
     

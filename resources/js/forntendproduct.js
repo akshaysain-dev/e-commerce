@@ -103,38 +103,19 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 (function () {
-    var descs  = {'5':'Excellent','4':'Good','3':'Average','2':'Poor','1':'Terrible'};
-    var descEl = document.getElementById('ratingDesc');
-    document.querySelectorAll('#starPicker input[type=radio]').forEach(function(r) {
-        r.addEventListener('change', function() {
-            descEl.textContent = descs[this.value] || '';
-        });
-    });
 
-    var ta = document.getElementById('reviewBody');
-    var cc = document.getElementById('charCount');
-    if (ta && cc) {
-        cc.textContent = ta.value.length;
-        ta.addEventListener('input', function() { cc.textContent = this.value.length; });
-    }
-
+    // ⭐ filter only
     document.querySelectorAll('.fk-filter').forEach(function(btn) {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.fk-filter').forEach(function(b) { b.classList.remove('active'); });
             this.classList.add('active');
+
             var f = this.dataset.filter;
+
             document.querySelectorAll('.fk-review-item').forEach(function(item) {
                 item.style.display = (f === 'all' || item.dataset.star === f) ? '' : 'none';
             });
         });
     });
 
-    var form = document.getElementById('reviewForm');
-    var btn  = document.getElementById('submitBtn');
-    if (form && btn) {
-        form.addEventListener('submit', function() {
-            btn.textContent = 'Submitting…';
-            btn.disabled    = true;
-        });
-    }
 })();

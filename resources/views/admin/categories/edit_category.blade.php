@@ -2,8 +2,18 @@
 
 @section('title', 'My Shop')
 
+@section('styles')
+<style>
+    /* ✅ FOOTER FIX */
+    .page-wrapper {
+        min-height: calc(100vh - 120px);
+    }
+</style>
+@endsection
+
 @section('content')
 
+<div class="page-wrapper">
 <div class="container mt-4 mb-3">
     <h2 class="mb-4">Edit Category</h2>
 
@@ -60,6 +70,7 @@
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="{{ route('admin_category') }}" class="btn btn-secondary">Cancel</a>
     </form>
+</div>
 </div>
 
 @endsection

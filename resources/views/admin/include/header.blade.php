@@ -391,17 +391,46 @@
         </div>
     </div>
 
+    @php
+        $admin = \App\Models\User::find(session('admin_id'));
+    @endphp
+
     <div class="tb-right">
         <a href="{{ route('home') }}" target="_blank" class="tb-icon-btn" title="View Store">
             ↗
         </a>
+
         <a href="{{ route('admin.orders') }}" class="tb-icon-btn" title="Orders">
             🛒
         </a>
+
         <a href="{{ route('admin.coupons.index') }}" class="tb-icon-btn" title="Coupons">
             🎟
         </a>
+
+        {{-- 🔐 2FA BUTTON --}}
+        @if($admin && $admin->google2fa_enabled)
+
+            {{-- Disable Button --}}
+            <a href="{{ route('admin.2fa.disable.page') }}" 
+            class="tb-icon-btn text-danger" 
+            title="Disable 2FA">
+                🔓
+            </a>
+
+        @else
+
+            {{-- Enable Button --}}
+            <a href="{{ route('admin.2fa.setup') }}" 
+            class="tb-icon-btn text-success" 
+            title="Enable 2FA">
+                🔐
+            </a>
+
+        @endif
+
         <div class="tb-divider"></div>
+
         <div class="tb-admin-pill">
             <div class="tb-pill-avatar">A</div>
             <span class="tb-admin-name d-none d-md-inline">Admin</span>

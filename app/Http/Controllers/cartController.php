@@ -126,16 +126,14 @@ class cartController extends Controller
             ];
         }
 
-        // =========================
-        // ✅ TAX CALCULATION (18%)
-        // =========================
-        $taxRate = $tax_shipping->tax;
+
+        $taxRate = $tax_shipping->tax ?? 5;
         $tax = ($grandTotal * $taxRate) / 100;
 
         // =========================
         // ✅ SHIPPING
         // =========================
-        $shipping = $grandTotal > $tax_shipping->max_charge_for_shipping ? 0 : 50;
+        $shipping = $grandTotal > $tax_shipping->max_charge_for_shipping ? 0 : $tax_shipping->shipping_charge;
 
         // =========================
         // ✅ FINAL TOTAL
@@ -153,6 +151,8 @@ class cartController extends Controller
             'tax'           => round($tax, 2),
             'shipping'      => $shipping,
             'finalTotal'    => round($finalTotal, 2),
+            'tax_rate'      => $tax_shipping->tax,
+            'max_charge_for_shipping' => $tax_shipping->max_charge_for_shipping,
         ]);
     }
 

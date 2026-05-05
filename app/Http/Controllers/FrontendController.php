@@ -24,7 +24,7 @@ class FrontendController extends Controller
         $banners     = Banner::where('type', 'main')->where('status', 1)->orderBy('sort_order', 'asc')->get();
         $sideBanners = Banner::where('type', 'side')->where('status', 1)->orderBy('sort_order', 'asc')->get();
         $categories  = Category::all();
-        $products = Product::where('status', 1)->latest()->paginate(8);
+        $products = Product::where('status', 1)->withAvg('ratings', 'rating')->withCount('ratings')->latest()->paginate(8);
 
         $recentProductIds = [];
 
@@ -50,6 +50,8 @@ class FrontendController extends Controller
 
                 $recentProducts = Product::whereIn('id', $recentProductIds)
                     ->where('status', 1)
+                    ->withAvg('ratings', 'rating')
+                    ->withCount('ratings')
                     ->orderByRaw("FIELD(id, " . implode(',', $recentProductIds) . ")")
                     ->take(10)
                     ->get();

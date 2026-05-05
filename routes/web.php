@@ -28,8 +28,13 @@ use App\Http\Controllers\TaxOrShippingChargeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\TwoFactorController;
+use App\Http\Controllers\RatingReplyController;
+use App\Http\Controllers\AdminReviewController;
 
 
+Route::get('/search', [ProductController::class, 'search'])->name('search.al');
+Route::get('/search/ajax', [ProductController::class, 'ajaxSearch'])->name('search.ajax');
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/product/{id}', [FrontendController::class, 'showSingleProduct'])->name('view_product');
 Route::get('/customer/register', [CustomerController::class, 'register'])->name('customer_register');
@@ -44,9 +49,28 @@ Route::get('/search/suggest', [ProductController::class, 'suggest'])->name('sear
 Route::post('/ajax/products-by-category', [FrontendController::class, 'productsByCategory'])->name('products.by.category');
 Route::post('/product/save-recent', [ProductController::class, 'saveRecent'])->name('product.saveRecent');
 Route::get('/sales', [FrontendController::class, 'salePage'])->name('sales.page');
-Route::post('/forget-password',[ForgotPasswordController::class,'sendResetLink'])->name('password.email');
+Route::post('/forget-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
 Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm']);
 Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
+//Route::get('/verify-email/{token}', [CustomerController::class, 'verifyEmail']);
+
+// Show choice page (link vs OTP)
+Route::get('/verify/choice', [CustomerController::class, 'verificationChoice'])->name('verification.choice');
+
+// Send email link
+Route::post('/verify/send-link', [CustomerController::class, 'sendVerificationLink'])->name('verification.sendLink');
+
+// Email link verify
+Route::get('/verify-email/{token}', [CustomerController::class, 'verifyEmail'])->name('verification.verifyEmail');
+
+// Send OTP
+Route::post('/verify/send-otp', [CustomerController::class, 'sendOtp'])->name('verification.sendOtp');
+
+// Show OTP form
+Route::get('/verify/otp', [CustomerController::class, 'showOtpForm'])->name('verification.otpForm');
+
+// Verify OTP
+Route::post('/verify/otp', [CustomerController::class, 'verifyOtp'])->name('verification.verifyOtp');
 
 Route::get('/customer/{product_id}/{variant_id}/add_cart', [cartController::class, 'addToCart'])->name('addToCart');
 Route::get('customer/cart', [CartController::class, 'index'])->name('cart_index');
@@ -66,7 +90,8 @@ Route::middleware([CustomerAuth::class])->group(function () {
     Route::get('customer/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('customer/placeOrder', [OrderController::class, 'placeOrder'])->name('place.order');
     Route::get('customer/order/success', function () {
-        return view('frontend.order-success'); })->name('order.success');
+        return view('frontend.order-success');
+    })->name('order.success');
     Route::get('/customer/orders', [CustomerController::class, 'myOrders'])->name('customer.orders');
 
     Route::post('/customer/checkout/stripe', [CheckoutController::class, 'stripeCheckout'])->name('stripe.payment');
@@ -99,6 +124,10 @@ Route::middleware([CustomerAuth::class])->group(function () {
     Route::post('/order/{id}/cancel', [OrderController::class, 'cancel_order'])->name('order.cancel');
     Route::post('/order/{id}/return', [ReturnOrderController::class, 'store'])->name('order.return');
     Route::get('/order/invoice/download/{id}', [OrderController::class, 'downloadInvoice'])->name('customer.invoice.download');
+
+    Route::post('/verify-email-otp', [CustomerController::class, 'verifyEmailOtp']);
+
+    Route::post('/ratings/reply', [RatingReplyController::class, 'store'])->name('ratings.reply.store');
 });
 
 Route::get('/admin', function () {
@@ -108,6 +137,36 @@ Route::get('/admin', function () {
         return view('admin.login');
     }
 })->name('admin');
+/* Route::get('/admin/dashboard', function () {
+
+    if (!session('admin_id')) {
+        return redirect()->route('admin');
+    }
+
+    // 🔐 CHECK 2FA
+    $user = \App\Models\User::find(session('admin_id'));
+
+    if ($user && $user->google2fa_enabled && !session('2fa_verified')) {
+        return redirect()->route('admin.2fa.verify');
+    }
+
+    return view('admin.dashboard');
+
+})->name('admin_dashboard'); */
+// Setup
+Route::get('/admin/2fa/setup', [TwoFactorController::class, 'setup'])->name('admin.2fa.setup');
+Route::post('/admin/2fa/enable', [TwoFactorController::class, 'enable'])->name('admin.2fa.enable');
+
+// Verify (login flow)
+Route::get('/admin/2fa', [TwoFactorController::class, 'verifyPage'])->name('admin.2fa.verify');
+Route::post('/admin/2fa', [TwoFactorController::class, 'verify'])->name('admin.2fa.check');
+
+Route::get('/admin/2fa/disable', function () {
+    return view('admin.2fa_disable');
+})->name('admin.2fa.disable.page');
+
+// Disable
+Route::post('/admin/2fa/disable', [TwoFactorController::class, 'disable'])->name('admin.2fa.disable');
 
 Route::post('/admin/login', [AuthController::class, 'admin_login'])->name('admin_login');
 
@@ -189,6 +248,18 @@ Route::middleware([AdminAuth::class])->group(function () {
     // Export Excel / CSV
     Route::get('/admin/sales-report/export', [ReportController::class, 'export'])->name('sales.export');
     Route::get('/admin/chart-data', [AuthController::class, 'chartData']);
+
+    Route::prefix('admin')->group(function () {
+
+        Route::get('/reviews', [AdminReviewController::class, 'index'])->name('admin.reviews');
+
+        Route::post('/reviews/{id}/approve', [AdminReviewController::class, 'approve'])->name('admin.reviews.approve');
+
+        Route::post('/reviews/{id}/reject', [AdminReviewController::class, 'reject'])->name('admin.reviews.reject');
+
+        Route::delete('/reviews/{id}', [AdminReviewController::class, 'delete'])->name('admin.reviews.delete');
+
+    });
 });
 
 Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('products.export');

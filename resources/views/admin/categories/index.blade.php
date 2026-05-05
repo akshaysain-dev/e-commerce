@@ -4,13 +4,17 @@
 
 @section('styles')
 <style>
+    /* ✅ FOOTER FIX */
+    .page-wrapper {
+        min-height: calc(100vh - 120px);
+    }
+
     .dashboard-card {
         border: none;
         border-radius: 15px;
         box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         background: #ffffff;
     }
-    /* Table Header Styling */
     .table thead th {
         background-color: #f1f4f9;
         text-transform: uppercase;
@@ -21,7 +25,6 @@
         border: none;
         padding: 15px;
     }
-    /* Table Row Styling */
     .table tbody tr {
         border-bottom: 1px solid #f1f1f1;
         transition: background 0.2s;
@@ -29,7 +32,6 @@
     .table tbody tr:hover {
         background-color: #f9fbff;
     }
-    /* Badge Styling */
     .status-badge {
         padding: 5px 12px;
         font-size: 0.75rem;
@@ -39,7 +41,6 @@
     .bg-soft-success { background: #d1fae5; color: #065f46; }
     .bg-soft-danger { background: #fee2e2; color: #991b1b; }
     
-    /* Buttons with Text */
     .btn-action-text {
         font-size: 0.75rem;
         font-weight: 600;
@@ -56,6 +57,7 @@
     
     .btn-delete { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
     .btn-delete:hover { background: #f5c6cb; }
+
     #category-table tr {
         cursor: move;
     }
@@ -71,7 +73,11 @@
 @endsection
 
 @section('content')
+
+{{-- ✅ page-wrapper footer ko neeche rakhta hai --}}
+<div class="page-wrapper">
 <div class="container-fluid px-4 py-4">
+
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -84,22 +90,18 @@
     </div>
 
     <form id="bulk-form" class="d-flex align-items-center gap-2 mb-3">
-
-        <!-- Select Dropdown -->
         <select id="bulk-action" class="form-select form-select-sm w-auto shadow-sm" required>
             <option value="">⚡ Bulk Action</option>
             <option value="delete">🗑 Delete</option>
             <option value="activate">✅ Activate</option>
             <option value="deactivate">🚫 Deactivate</option>
         </select>
-
-        <!-- Apply Button -->
         <button type="button" onclick="applyBulkAction()" 
             class="btn btn-sm btn-dark px-3 shadow-sm" disabled>
             Apply
         </button>
-
     </form>
+
     @if (session('success'))
         <div class="alert alert-success border-0 shadow-sm rounded-3 alert-dismissible fade show mb-4">
             {{ session('success') }}
@@ -168,7 +170,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5 text-muted">No categories available.</td>
+                            <td colspan="8" class="text-center py-5 text-muted">No categories available.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -188,7 +190,10 @@
             </div>
         </div>
     </div>
+
 </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -197,20 +202,14 @@
 <script>
 new Sortable(document.getElementById('category-table'), {
     animation: 150,
-
     onEnd: function () {
         let order = [];
-
         document.querySelectorAll('#category-table tr').forEach((row, index) => {
-            if(row.dataset.id){ // skip empty row
-                order.push({
-                    id: row.dataset.id,
-                    position: index + 1
-                });
+            if(row.dataset.id){
+                order.push({ id: row.dataset.id, position: index + 1 });
             }
         });
-
-       fetch("{{ route('category.order') }}", {
+        fetch("{{ route('category.order') }}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -220,17 +219,13 @@ new Sortable(document.getElementById('category-table'), {
         });
     }
 });
-</script>
 
-<script>
 document.getElementById('select-all').addEventListener('change', function () {
     document.querySelectorAll('.category-checkbox').forEach(cb => {
         cb.checked = this.checked;
     });
 });
-</script>
 
-<script>
 function applyBulkAction() {
     let selected = [];
     let action = document.getElementById('bulk-action').value;
@@ -239,15 +234,8 @@ function applyBulkAction() {
         selected.push(cb.value);
     });
 
-    if (selected.length === 0) {
-        alert('Select at least one category');
-        return;
-    }
-
-    if (!action) {
-        alert('Select an action');
-        return;
-    }
+    if (selected.length === 0) { alert('Select at least one category'); return; }
+    if (!action) { alert('Select an action'); return; }
 
     fetch("{{ route('category.bulk') }}", {
         method: "POST",
@@ -255,10 +243,7 @@ function applyBulkAction() {
             "Content-Type": "application/json",
             "X-CSRF-TOKEN": "{{ csrf_token() }}"
         },
-        body: JSON.stringify({
-            ids: selected,
-            action: action
-        })
+        body: JSON.stringify({ ids: selected, action: action })
     })
     .then(res => res.json())
     .then(data => {

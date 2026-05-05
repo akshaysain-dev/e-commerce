@@ -97,12 +97,44 @@
                         </label>
                     </div>
                     <div id="new-address-field" class="mt-3 animate__animated animate__fadeIn"
-                         style="display: {{ !($customer->area || $customer->city) ? 'block' : 'none' }};">
-                        <label class="form-label small fw-bold">Enter Full Shipping Address</label>
-                        <textarea name="address" id="new_address_textarea" class="form-control" rows="3"
-                                  placeholder="Street, Building, Landmark, etc."
-                                  {{ !($customer->area || $customer->city) ? 'required' : '' }}></textarea>
+                    style="display: {{ !($customer->area || $customer->city) ? 'block' : 'none' }};">
+
+                    <label class="form-label small fw-bold mb-2">Enter New Shipping Details</label>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-2">
+                            <input type="text" name="new_phone" class="form-control"
+                                placeholder="Phone Number"
+                                {{ !($customer->area || $customer->city) ? 'required' : '' }}>
+                        </div>
+
+                        <div class="col-12 mb-2">
+                            <input type="text" name="new_address" class="form-control"
+                                placeholder="Street, Building, Landmark"
+                                {{ !($customer->area || $customer->city) ? 'required' : '' }}>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <input type="text" name="new_city" class="form-control"
+                                placeholder="City"
+                                {{ !($customer->area || $customer->city) ? 'required' : '' }}>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <input type="text" name="new_state" class="form-control"
+                                placeholder="State"
+                                {{ !($customer->area || $customer->city) ? 'required' : '' }}>
+                        </div>
+
+                        <div class="col-md-4 mb-2">
+                            <input type="text" name="new_pincode" class="form-control"
+                                placeholder="Pincode"
+                                {{ !($customer->area || $customer->city) ? 'required' : '' }}>
+                        </div>
+
                     </div>
+                </div>
                 </div>
 
                 <h3 class="h5 mt-2 mb-3 fw-semibold">Discount Coupon</h3>

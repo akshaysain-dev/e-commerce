@@ -7,12 +7,14 @@ use App\Models\ProductVariant;
 use App\Models\Rating;
 use App\Models\ProductType;
 use App\Models\Tag;
+use Laravel\Scout\Searchable;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
     //
+    use Searchable;
     protected $fillable = [
         'category_id','user_id','name','description','status','image','images','product_type_id','refunded_amount',
     ];
@@ -67,5 +69,18 @@ class Product extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'product_tag');
+    }
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->firstVariant->margin_price ?? 0,
+            'category' => optional($this->category)->name,
+            'type' => optional($this->type)->name,
+            'tags' => $this->tags->pluck('name')->toArray(),
+        ];
     }
 }

@@ -55,6 +55,46 @@
     .sale-ends { font-size: .78rem; color: #ef4444; font-weight: 600; margin-top: 4px; }
     .variant-sale-info { font-size: .6rem; color: #ef4444; font-weight: 600; margin-top: 2px; }
 </style>
+<style>
+    .active-variant { background-color: #212529 !important; color: white !important; }
+    .thumb-image:hover { border-color: #0d6efd; }
+    .fk-star-picker { display: inline-flex; flex-direction: row-reverse; gap: 6px; }
+    .fk-star-picker input[type="radio"] { display: none; }
+    .fk-star-picker label { font-size: 32px; color: #dee2e6; cursor: pointer; line-height: 1; transition: color .1s, transform .1s; user-select: none; }
+    .fk-star-picker input:checked ~ label,
+    .fk-star-picker label:hover,
+    .fk-star-picker label:hover ~ label { color: #ff9f00; }
+    .fk-star-picker label:hover { transform: scale(1.15); }
+    form { margin-block-end: 0px; }
+</style>
+
+<style>
+.fk-filter.active {
+    background: #212121 !important;
+    color: #fff !important;
+    border-color: #212121 !important;
+}
+.fk-review-img-wrap {
+    transition: transform .15s, box-shadow .15s;
+}
+.fk-review-img-wrap:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 10px rgba(0,0,0,.18);
+}
+.fk-reply-input::placeholder { color: #9e9e9e; }
+.fk-lb-thumb {
+    width: 52px; height: 52px; object-fit: cover;
+    border-radius: 4px; border: 2px solid transparent;
+    cursor: pointer; opacity: .7;
+    transition: opacity .15s, border-color .15s;
+}
+.fk-lb-thumb.active, .fk-lb-thumb:hover { opacity: 1; border-color: #fff; }
+@keyframes fkSlideIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.fk-reply-new { animation: fkSlideIn .25s ease; }
+</style>
 @endsection
 
 @section('content')
@@ -67,7 +107,7 @@
     $savedAmount     = $basePrice - $discountedPrice;
 @endphp
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="row">
 
         <div class="col-md-6">
@@ -205,9 +245,10 @@
 
 <div class="container py-4">
     <div class="row g-3 align-items-start">
-
-        <div class="col-lg-7">
-            <div class="card border rounded-1 mb-3">
+ 
+        {{-- ===== LEFT COL: Ratings Summary ===== --}}
+        <div class="col-lg-5">
+            <div class="card border rounded-1">
                 <div class="card-header bg-white border-bottom py-3">
                     <h6 class="mb-0 fw-semibold">Ratings &amp; Reviews</h6>
                 </div>
@@ -248,6 +289,7 @@
                             @endforeach
                         </div>
                     </div>
+ 
                     <div class="row g-2 pt-2 border-top">
                         <div class="col-4">
                             <div class="bg-light rounded-1 text-center py-2">
@@ -274,7 +316,11 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        {{-- ===== END LEFT COL ===== --}}
+ 
+        {{-- ===== RIGHT COL: Customer Reviews ===== --}}
+        <div class="col-lg-7">
             <div class="card border rounded-1">
                 <div class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
                     <h6 class="mb-0 fw-semibold">Customer Reviews</h6>
@@ -290,25 +336,73 @@
                         @endforeach
                     </div>
                 </div>
+ 
                 <div class="card-body p-0" id="reviewsList">
                     @forelse($ratings as $review)
-                        <div class="p-3 border-bottom fk-review-item" data-star="{{ $review->rating }}">
-                            @php $bg = $review->rating >= 4 ? 'success' : ($review->rating == 3 ? 'warning' : 'danger'); @endphp
+                        @php
+                            $bg = $review->rating >= 4 ? 'success' : ($review->rating == 3 ? 'warning' : 'danger');
+                            $images = [];
+                            if (!empty($review->images)) {
+                                $decoded = is_array($review->images) ? $review->images : json_decode($review->images, true);
+                                $images = is_array($decoded) ? $decoded : [];
+                            }
+                        @endphp
+ 
+                        <div class="fk-review-item p-3 border-bottom" data-star="{{ $review->rating }}">
+ 
+                            {{-- Badge --}}
                             <span class="badge bg-{{ $bg }} mb-2" style="font-size:11px;">★ {{ $review->rating }}</span>
+ 
+                            {{-- Title --}}
                             @if($review->title)
                                 <div class="fw-semibold mb-1" style="font-size:14px;">{{ $review->title }}</div>
                             @endif
+ 
+                            {{-- Review Text --}}
                             @if($review->review)
                                 <p class="text-muted mb-2" style="font-size:13px; line-height:1.6;">{{ $review->review }}</p>
                             @endif
-                            <div class="d-flex align-items-center gap-2 flex-wrap">
+ 
+                            {{-- ===== IMAGES SECTION ===== --}}
+                            @if(count($images) > 0)
+                                <div class="d-flex flex-wrap gap-2 mb-2">
+                                    @foreach($images as $idx => $imgPath)
+                                        @if($idx < 4)
+                                            <div class="fk-review-img-wrap"
+                                                 style="width:70px; height:70px; border-radius:6px; overflow:hidden; border:1px solid #e0e0e0; cursor:pointer; flex-shrink:0;"
+                                                 onclick="fkOpenLightbox({{ $review->id }}, {{ $idx }})">
+                                                <img src="{{ asset('storage/' . $imgPath) }}"
+                                                     alt="Review image {{ $idx + 1 }}"
+                                                     style="width:100%; height:100%; object-fit:cover; display:block;"
+                                                     onerror="this.parentElement.style.display='none'">
+                                            </div>
+                                        @endif
+                                    @endforeach
+ 
+                                    @if(count($images) > 4)
+                                        <div class="fk-review-img-wrap d-flex align-items-center justify-content-center"
+                                             style="width:70px; height:70px; border-radius:6px; background:#f5f5f5; border:1px solid #e0e0e0; cursor:pointer; flex-shrink:0; font-size:12px; color:#555; font-weight:600;"
+                                             onclick="fkOpenLightbox({{ $review->id }}, 4)">
+                                            +{{ count($images) - 4 }} more
+                                        </div>
+                                    @endif
+                                </div>
+                                <div id="fk-imgs-{{ $review->id }}" style="display:none;"
+                                     data-images="{{ json_encode(array_map(fn($p) => asset('storage/' . $p), $images)) }}"></div>
+                            @endif
+                            {{-- ===== END IMAGES ===== --}}
+ 
+                            {{-- Reviewer Meta --}}
+                            <div class="d-flex align-items-center gap-2 flex-wrap mb-2">
                                 <span style="font-size:12px;"><strong>{{ $review->customer->name ?? 'Anonymous' }}</strong></span>
                                 @if($review->is_verified_purchase)
                                     <span class="text-success" style="font-size:11px; font-weight:500;">✓ Certified Buyer</span>
                                 @endif
                                 <span class="text-muted" style="font-size:11px;">· {{ $review->created_at->diffForHumans() }}</span>
                             </div>
-                            <div class="d-flex align-items-center gap-2 mt-2">
+ 
+                            {{-- Actions --}}
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
                                 <span class="text-muted" style="font-size:12px;">Helpful?</span>
                                 <form action="{{ route('ratings.helpful', $review->id) }}" method="POST" class="d-inline">
                                     @csrf
@@ -320,13 +414,82 @@
                                     <input type="hidden" name="vote" value="no">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size:12px;">👎 No ({{ $review->helpful_no ?? 0 }})</button>
                                 </form>
+ 
+                                <button class="btn btn-sm btn-outline-secondary py-0 px-2 fk-reply-toggle"
+                                        data-review="{{ $review->id }}"
+                                        style="font-size:12px;">
+                                    💬 Reply
+                                    @if($review->replies && $review->replies->count() > 0)
+                                        <span class="text-muted">({{ $review->replies->count() }})</span>
+                                    @endif
+                                </button>
+ 
                                 @if(session('customer_id') && session('customer_id') == $review->customer_id)
-                                    <form action="{{ route('ratings.destroy', [$product->id, $review->id]) }}" method="POST" class="d-inline ms-auto" onsubmit="return confirm('Delete your review?')">
+                                    <form action="{{ route('ratings.destroy', [$product->id, $review->id]) }}" method="POST"
+                                          class="d-inline ms-auto" onsubmit="return confirm('Delete your review?')">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size:11px;">Delete</button>
                                     </form>
                                 @endif
                             </div>
+ 
+                            {{-- ===== REPLY SECTION ===== --}}
+                            <div class="fk-replies-section mt-2" id="fk-replies-{{ $review->id }}" style="display:none;">
+ 
+                                @if($review->replies && $review->replies->count() > 0)
+                                    <div class="fk-replies-list mb-2"
+                                         style="border-left:2px solid #e9ecef; padding-left:12px; margin-left:4px;">
+                                        @foreach($review->replies as $reply)
+                                            <div class="d-flex gap-2 mb-2">
+                                                <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle"
+                                                     style="width:28px; height:28px; background:#e9ecef; font-size:11px; font-weight:600; color:#555; text-transform:uppercase;">
+                                                    {{ substr($reply->author_name ?? 'A', 0, 1) }}
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <div class="d-inline-block px-3 py-2 rounded-3"
+                                                         style="background:#f1f3f4; font-size:13px; line-height:1.5; max-width:100%;">
+                                                        <div style="font-size:11px; font-weight:600; color:#333; margin-bottom:2px;">
+                                                            {{ $reply->author_name ?? 'Anonymous' }}
+                                                            @if($reply->is_seller)
+                                                                <span class="badge bg-primary ms-1" style="font-size:9px; padding:2px 5px;">Seller</span>
+                                                            @endif
+                                                        </div>
+                                                        <div style="color:#444;">{{ $reply->body }}</div>
+                                                    </div>
+                                                    <div class="text-muted mt-1" style="font-size:10px; padding-left:2px;">
+                                                        {{ $reply->created_at->diffForHumans() }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+ 
+                                <div class="d-flex gap-2 align-items-center" style="padding-left:4px;">
+                                    <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle"
+                                         style="width:28px; height:28px; background:#dee2e6; font-size:11px; font-weight:600; color:#555;">
+                                        {{ strtoupper(substr(session('customer_name', 'Y'), 0, 1)) ?: 'Y' }}
+                                    </div>
+                                    <div class="flex-grow-1 d-flex gap-1 align-items-center"
+                                         style="background:#f1f3f4; border-radius:20px; padding:5px 10px 5px 14px;">
+                                        <input type="text"
+                                               class="fk-reply-input flex-grow-1 border-0 bg-transparent"
+                                               placeholder="Write a reply…"
+                                               data-review="{{ $review->id }}"
+                                               style="outline:none; font-size:13px; color:#333;"
+                                               maxlength="500">
+                                        <button class="fk-reply-send"
+                                                data-review="{{ $review->id }}"
+                                                style="background:none; border:none; color:#1976d2; font-size:18px; line-height:1; cursor:pointer; padding:0 4px;"
+                                                title="Send">➤</button>
+                                    </div>
+                                </div>
+                                <div id="fk-reply-err-{{ $review->id }}"
+                                     class="text-danger"
+                                     style="font-size:11px; display:none; padding-left:40px; margin-top:4px;"></div>
+                            </div>
+                            {{-- ===== END REPLY SECTION ===== --}}
+ 
                         </div>
                     @empty
                         <div class="text-center text-muted py-5" style="font-size:13px;">
@@ -335,82 +498,41 @@
                         </div>
                     @endforelse
                 </div>
+ 
                 @if($ratings->hasPages())
                     <div class="card-footer bg-white border-top py-2">{{ $ratings->links() }}</div>
                 @endif
             </div>
         </div>
-
-        <div class="col-lg-5">
-            <div class="card border rounded-1 sticky-top" style="top:16px;">
-                <div class="card-header bg-white border-bottom py-3">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="border rounded-1 overflow-hidden flex-shrink-0" style="width:56px; height:56px; background:#f8f8f8;">
-                            @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-100 h-100 object-fit-cover">
-                            @else
-                                <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="font-size:24px;">📦</div>
-                            @endif
-                        </div>
-                        <div>
-                            <div class="fw-semibold" style="font-size:13px; line-height:1.4;">{{ $product->name }}</div>
-                            <div class="text-muted" style="font-size:12px;">Share your experience</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('ratings.store', $product->id) }}" method="POST" id="reviewForm" novalidate>
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label text-muted fw-semibold" style="font-size:11px; letter-spacing:.07em; text-transform:uppercase;">
-                                Your Rating <span class="text-danger">*</span>
-                            </label>
-                            <div class="fk-star-picker" id="starPicker">
-                                <input type="radio" name="rating" id="star5" value="5" {{ old('rating') == 5 ? 'checked' : '' }} required>
-                                <label for="star5" title="Excellent">★</label>
-                                <input type="radio" name="rating" id="star4" value="4" {{ old('rating') == 4 ? 'checked' : '' }}>
-                                <label for="star4" title="Good">★</label>
-                                <input type="radio" name="rating" id="star3" value="3" {{ old('rating') == 3 ? 'checked' : '' }}>
-                                <label for="star3" title="Average">★</label>
-                                <input type="radio" name="rating" id="star2" value="2" {{ old('rating') == 2 ? 'checked' : '' }}>
-                                <label for="star2" title="Poor">★</label>
-                                <input type="radio" name="rating" id="star1" value="1" {{ old('rating') == 1 ? 'checked' : '' }}>
-                                <label for="star1" title="Terrible">★</label>
-                            </div>
-                            <div id="ratingDesc" class="fw-semibold mt-1" style="font-size:13px; min-height:18px;">
-                                @php $descs = [5=>'Excellent',4=>'Good',3=>'Average',2=>'Poor',1=>'Terrible']; @endphp
-                                {{ $descs[old('rating')] ?? '' }}
-                            </div>
-                            @error('rating')
-                                <div class="text-danger mt-1" style="font-size:12px;">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-muted fw-semibold" style="font-size:11px; letter-spacing:.07em; text-transform:uppercase;">Review Title</label>
-                            <input type="text" name="title" class="form-control form-control-sm @error('title') is-invalid @enderror"
-                                   placeholder="Summarise your review in one line" value="{{ old('title') }}" maxlength="100" style="border-radius:2px;">
-                            @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-muted fw-semibold" style="font-size:11px; letter-spacing:.07em; text-transform:uppercase;">Your Review</label>
-                            <textarea name="review" id="reviewBody" class="form-control form-control-sm @error('review') is-invalid @enderror"
-                                      placeholder="What did you like or dislike about this product?"
-                                      rows="4" maxlength="2000" style="border-radius:2px; resize:vertical;">{{ old('review') }}</textarea>
-                            <div class="text-end text-muted mt-1" style="font-size:11px;"><span id="charCount">0</span> / 2000</div>
-                            @error('review') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        </div>
-                        <div class="d-flex gap-2 mt-3">
-                            <a href="{{ url()->current() }}" class="btn btn-outline-secondary btn-sm px-4" style="border-radius:2px; font-size:14px;">Cancel</a>
-                            <button type="submit" class="btn btn-sm flex-grow-1 text-white fw-semibold" id="submitBtn"
-                                    style="background:#fb641b; border:none; border-radius:2px; font-size:14px;">Submit Review</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
+        {{-- ===== END RIGHT COL ===== --}}
+ 
     </div>
 </div>
+ 
+{{-- ===== LIGHTBOX ===== --}}
+<div id="fkLightbox"
+     style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.88);
+            align-items:center; justify-content:center; flex-direction:column;">
+    <button onclick="fkCloseLightbox()"
+            style="position:absolute; top:16px; right:20px; background:none; border:none;
+                   color:#fff; font-size:28px; cursor:pointer; line-height:1;">✕</button>
+    <button id="fkLbPrev" onclick="fkLbNav(-1)"
+            style="position:absolute; left:16px; top:50%; transform:translateY(-50%);
+                   background:rgba(255,255,255,.15); border:none; color:#fff; font-size:24px;
+                   width:44px; height:44px; border-radius:50%; cursor:pointer;">‹</button>
+    <button id="fkLbNext" onclick="fkLbNav(1)"
+            style="position:absolute; right:16px; top:50%; transform:translateY(-50%);
+                   background:rgba(255,255,255,.15); border:none; color:#fff; font-size:24px;
+                   width:44px; height:44px; border-radius:50%; cursor:pointer;">›</button>
+    <img id="fkLbImg" src="" alt="Review image"
+         style="max-width:88vw; max-height:78vh; object-fit:contain; border-radius:6px;
+                box-shadow:0 4px 32px rgba(0,0,0,.5);">
+    <div id="fkLbThumbs" class="d-flex gap-2 mt-3"
+         style="flex-wrap:wrap; justify-content:center; max-width:90vw;"></div>
+    <div id="fkLbCounter" style="color:#ffffffaa; font-size:12px; margin-top:8px;"></div>
+</div>
+{{-- ===== END LIGHTBOX ===== --}}
+
 
 <!-- Related Products -->
 <div id="recent-products-container" class="bg-white border-top border-bottom py-3">
@@ -472,18 +594,6 @@
 
 @endsection
 
-<style>
-    .active-variant { background-color: #212529 !important; color: white !important; }
-    .thumb-image:hover { border-color: #0d6efd; }
-    .fk-star-picker { display: inline-flex; flex-direction: row-reverse; gap: 6px; }
-    .fk-star-picker input[type="radio"] { display: none; }
-    .fk-star-picker label { font-size: 32px; color: #dee2e6; cursor: pointer; line-height: 1; transition: color .1s, transform .1s; user-select: none; }
-    .fk-star-picker input:checked ~ label,
-    .fk-star-picker label:hover,
-    .fk-star-picker label:hover ~ label { color: #ff9f00; }
-    .fk-star-picker label:hover { transform: scale(1.15); }
-    form { margin-block-end: 0px; }
-</style>
 
 @push('scripts')
 <script>
@@ -498,4 +608,213 @@
     };
 </script>
 <script src="{{ asset('js/frontendproduct.js') }}"></script>
+
+<script>
+// ============================================================
+// STAR FILTER
+// ============================================================
+document.querySelectorAll('.fk-filter').forEach(btn => {
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('.fk-filter').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+        document.querySelectorAll('.fk-review-item').forEach(item => {
+            item.style.display = (filter === 'all' || item.dataset.star === filter) ? '' : 'none';
+        });
+    });
+});
+
+// ============================================================
+// LIGHTBOX
+// ============================================================
+let _lbImgs = [], _lbIdx = 0;
+
+function fkOpenLightbox(reviewId, startIdx) {
+    const el = document.getElementById('fk-imgs-' + reviewId);
+    if (!el) return;
+    _lbImgs = JSON.parse(el.dataset.images || '[]');
+    _lbIdx  = startIdx;
+    fkLbRender();
+    const lb = document.getElementById('fkLightbox');
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function fkCloseLightbox() {
+    document.getElementById('fkLightbox').style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function fkLbNav(dir) {
+    _lbIdx = (_lbIdx + dir + _lbImgs.length) % _lbImgs.length;
+    fkLbRender();
+}
+
+function fkLbRender() {
+    document.getElementById('fkLbImg').src = _lbImgs[_lbIdx];
+    document.getElementById('fkLbCounter').textContent = (_lbIdx + 1) + ' / ' + _lbImgs.length;
+
+    // Prev/Next visibility
+    document.getElementById('fkLbPrev').style.display = _lbImgs.length > 1 ? '' : 'none';
+    document.getElementById('fkLbNext').style.display = _lbImgs.length > 1 ? '' : 'none';
+
+    // Thumbnails
+    const wrap = document.getElementById('fkLbThumbs');
+    wrap.innerHTML = '';
+    _lbImgs.forEach((src, i) => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'fk-lb-thumb' + (i === _lbIdx ? ' active' : '');
+        img.onclick = () => { _lbIdx = i; fkLbRender(); };
+        wrap.appendChild(img);
+    });
+}
+
+// Close lightbox on backdrop click
+document.getElementById('fkLightbox').addEventListener('click', function(e) {
+    if (e.target === this) fkCloseLightbox();
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', function(e) {
+    const lb = document.getElementById('fkLightbox');
+    if (lb.style.display === 'flex') {
+        if (e.key === 'ArrowRight') fkLbNav(1);
+        if (e.key === 'ArrowLeft')  fkLbNav(-1);
+        if (e.key === 'Escape')     fkCloseLightbox();
+    }
+});
+
+// ============================================================
+// REPLY SYSTEM
+// ============================================================
+
+// Toggle reply box
+document.querySelectorAll('.fk-reply-toggle').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const reviewId = this.dataset.review;
+        const section  = document.getElementById('fk-replies-' + reviewId);
+        if (!section) return;
+        const isOpen = section.style.display !== 'none';
+        section.style.display = isOpen ? 'none' : 'block';
+        if (!isOpen) {
+            const inp = section.querySelector('.fk-reply-input');
+            if (inp) inp.focus();
+        }
+    });
+});
+
+// Send on Enter key
+document.querySelectorAll('.fk-reply-input').forEach(inp => {
+    inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            fkSendReply(this.dataset.review);
+        }
+    });
+});
+
+// Send on button click
+document.querySelectorAll('.fk-reply-send').forEach(btn => {
+    btn.addEventListener('click', function() {
+        fkSendReply(this.dataset.review);
+    });
+});
+
+function fkSendReply(reviewId) {
+    const section  = document.getElementById('fk-replies-' + reviewId);
+    const input    = section ? section.querySelector('.fk-reply-input') : null;
+    const errBox   = document.getElementById('fk-reply-err-' + reviewId);
+    if (!input) return;
+
+    const body = input.value.trim();
+    if (!body) return;
+
+    // Disable while sending
+    input.disabled = true;
+    const sendBtn = section.querySelector('.fk-reply-send');
+    if (sendBtn) sendBtn.disabled = true;
+    if (errBox) errBox.style.display = 'none';
+
+    fetch('{{ route("ratings.reply.store") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ rating_id: reviewId, body: body })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            // Append new reply bubble
+            const list = section.querySelector('.fk-replies-list') || fkCreateReplyList(section);
+            const bubble = fkBuildBubble(data.reply);
+            list.appendChild(bubble);
+            input.value = '';
+
+            // Update reply count badge in toggle button
+            const toggleBtn = document.querySelector('.fk-reply-toggle[data-review="' + reviewId + '"]');
+            if (toggleBtn) {
+                let countSpan = toggleBtn.querySelector('span');
+                const currentCount = parseInt((countSpan ? countSpan.textContent.replace(/\D/g,'') : '0')) || 0;
+                if (!countSpan) {
+                    countSpan = document.createElement('span');
+                    countSpan.className = 'text-muted';
+                    toggleBtn.appendChild(countSpan);
+                }
+                countSpan.textContent = '(' + (currentCount + 1) + ')';
+            }
+        } else {
+            if (errBox) { errBox.textContent = data.message || 'Something went wrong.'; errBox.style.display = 'block'; }
+        }
+    })
+    .catch(() => {
+        if (errBox) { errBox.textContent = 'Could not send reply. Please try again.'; errBox.style.display = 'block'; }
+    })
+    .finally(() => {
+        input.disabled = false;
+        if (sendBtn) sendBtn.disabled = false;
+        input.focus();
+    });
+}
+
+function fkCreateReplyList(section) {
+    const list = document.createElement('div');
+    list.className = 'fk-replies-list mb-2';
+    list.style.cssText = 'border-left:2px solid #e9ecef; padding-left:12px; margin-left:4px;';
+    section.insertBefore(list, section.querySelector('.fk-reply-input-wrap'));
+    return list;
+}
+
+function fkBuildBubble(reply) {
+    const wrap = document.createElement('div');
+    wrap.className = 'fk-reply-bubble d-flex gap-2 mb-2 fk-reply-new';
+
+    const initial = (reply.author_name || 'Y').charAt(0).toUpperCase();
+    const isSeller = reply.is_seller ? '<span class="badge bg-primary ms-1" style="font-size:9px;padding:2px 5px;">Seller</span>' : '';
+
+    wrap.innerHTML = `
+        <div class="fk-avatar flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle"
+             style="width:28px;height:28px;background:#e9ecef;font-size:11px;font-weight:600;color:#555;text-transform:uppercase;">
+            ${initial}
+        </div>
+        <div class="flex-grow-1">
+            <div class="d-inline-block px-3 py-2 rounded-3"
+                 style="background:#f1f3f4;font-size:13px;line-height:1.5;max-width:100%;">
+                <div style="font-size:11px;font-weight:600;color:#333;margin-bottom:2px;">
+                    ${escHtml(reply.author_name || 'You')}${isSeller}
+                </div>
+                <div style="color:#444;">${escHtml(reply.body)}</div>
+            </div>
+            <div class="text-muted mt-1" style="font-size:10px;padding-left:2px;">Just now</div>
+        </div>`;
+    return wrap;
+}
+
+function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
 @endpush

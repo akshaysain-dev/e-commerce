@@ -20,6 +20,7 @@ class TaxOrShippingChargeController extends Controller
             'max_charge_for_shipping' => 'required',
         ]);
 
+       // dd($request->all());
         if (!$request->tax_id) {
             // Create new record if no ID is present
             TaxOrShippingCharge::create($request->all());

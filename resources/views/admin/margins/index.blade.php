@@ -2,7 +2,18 @@
 
 @section('title', 'Manage Margins')
 
+@section('styles')
+<style>
+    /* ✅ FOOTER FIX */
+    .page-wrapper {
+        min-height: calc(100vh - 120px);
+    }
+</style>
+@endsection
+
 @section('content')
+
+<div class="page-wrapper">
 <div class="container mt-4 mb-4">
 
 	<!-- Success Message -->
@@ -99,4 +110,6 @@
         </div>
     </div>
 </div>
+</div>
+
 @endsection

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 //use Illuminate\Support\Facades\Auth;
+use PragmaRX\Google2FA\Google2FA;
 
 class AuthController extends Controller
 {
@@ -28,7 +29,6 @@ class AuthController extends Controller
 
     public function admin_login(Request $request)
     {
-        // Validate inputs
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -37,8 +37,27 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
+
+            // 🔐 SECURITY: regenerate session
+            $request->session()->regenerate();
+
+            // Store session
             $request->session()->put('admin_id', $user->id);
             $request->session()->put('admin_name', $user->name);
+
+            // 🔐 ALWAYS reset 2FA status
+            $request->session()->forget('2fa_verified');
+
+            // 🔐 CHECK 2FA
+            if ($user->google2fa_enabled) {
+
+                $request->session()->put('2fa_verified', false);
+
+                return redirect()->route('admin.2fa.verify');
+            }
+
+            // ✅ No 2FA
+            $request->session()->put('2fa_verified', true);
 
             return redirect()->route('admin_dashboard');
         }
@@ -56,6 +75,16 @@ class AuthController extends Controller
 
     public function admin_dashboard(Request $request)
     {
+        if (!session('admin_id')) {
+            return redirect()->route('admin');
+        }
+
+        $user = User::find(session('admin_id'));
+
+        if ($user && $user->google2fa_enabled && !session('2fa_verified')) {
+            return redirect()->route('admin.2fa.verify');
+        }
+
         $validStatuses = ['paid', 'processing', 'shipped', 'delivered'];
 
         // 🔥 Profit / Revenue Chart (Last 7 Days with NO missing dates)
@@ -172,6 +201,10 @@ class AuthController extends Controller
         ]);
 
         $customer = Customer::where('email', $request->email)->where('status', 1)->first();
+
+        if(!$customer){
+            return back()->with("error","Your account may have been deactivated by the system or there may be no record of $request->email.");
+        }
 
         if ($customer && Hash::check($request->password, $customer->password)) {
             

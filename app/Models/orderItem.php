@@ -27,5 +27,6 @@ class orderItem extends Model
         'product_variant_id',
         'quantity',
         'price',
+        'main_price'
     ];
 }

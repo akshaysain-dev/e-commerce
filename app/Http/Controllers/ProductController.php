@@ -759,7 +759,7 @@ class ProductController extends Controller
         return view('admin.products.importcsv');
     }
 	
-	public function search(Request $request)
+	/* public function search(Request $request)
 	{
 		$query = $request->input('q');
 		
@@ -789,6 +789,87 @@ class ProductController extends Controller
 			->paginate(12);
 
 		return view('frontend.search_result', compact('products', 'query'));
-	}
+	} */
 
+    // algolia filter search
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        if (!$query) {
+            return view('frontend.search_result', [
+                'products' => collect(),
+                'query' => $query
+            ]);
+        }
+
+        $words = explode(' ', trim($query));
+
+        $searchQuery = implode(' ', $words);
+
+        $algoliaQuery = Product::search($searchQuery);
+
+        if ($request->category) {
+            $algoliaQuery->where('category', $request->category);
+        }
+
+        if ($request->type) {
+            $algoliaQuery->where('type', $request->type);
+        }
+
+        if ($request->min_price && $request->max_price) {
+            $algoliaQuery->whereBetween('price', [
+                (int)$request->min_price,
+                (int)$request->max_price
+            ]);
+        }
+
+        $products = $algoliaQuery->paginate(12);
+
+        return view('frontend.search_result', compact('products', 'query'));
+    }
+
+    public function ajaxSearch(Request $request)
+    {
+        $input = trim($request->q);
+
+        if (!$input) {
+            return response()->json([]);
+        }
+
+        // 🔥 Split words (like your old logic)
+        $words = explode(' ', $input);
+        $searchQuery = implode(' ', $words);
+
+        $query = Product::search($searchQuery);
+
+        if ($request->category) {
+            $query->where('category', $request->category);
+        }
+
+        if ($request->type) {
+            $query->where('type', $request->type);
+        }
+
+        if ($request->min_price && $request->max_price) {
+            $query->whereBetween('price', [
+                (int)$request->min_price,
+                (int)$request->max_price
+            ]);
+        }
+
+        // 🔥 Get results
+        $products = $query->take(6)->get();
+
+        $formatted = $products->map(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->firstVariant->margin_price ?? 0,
+                'image' => $product->image ?? null,
+            ];
+        });
+
+        return response()->json($formatted);
+    }
 }

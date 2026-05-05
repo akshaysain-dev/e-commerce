@@ -11,7 +11,7 @@ class StripePaymentService implements PaymentGatewayInterface
     public function initiate(array $pendingOrder, Collection $cartItems): mixed
     {
         $paymentIntent = $this->stripe->paymentIntents->create([
-            'amount'                    => $pendingOrder['total_amount'] * 100,
+            'amount' => (int) number_format($pendingOrder['total_amount'] * 100, 0, '.', ''),
             'currency'                  => 'inr',
             'automatic_payment_methods' => ['enabled' => true],
             'metadata'                  => [

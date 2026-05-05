@@ -12,6 +12,7 @@ class Customer extends Authenticatable
     //
     protected $fillable = [
         'name',
+        'zoho_id',
         'email',
         'phone',
         'password',

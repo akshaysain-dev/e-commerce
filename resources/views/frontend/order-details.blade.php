@@ -26,29 +26,99 @@
                 </div>
                 <div class="card-body p-0">
                     @foreach($order->orderItems as $item)
-                    <div class="d-flex align-items-center gap-3 p-3 {{ !$loop->last ? 'border-bottom' : '' }}">
-                        <img src="{{ asset('storage/' . $item->product->image) }}" 
-                             alt="{{ $item->product->name }}" 
-                             class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;">
-                        
-                        <div class="flex-grow-1">
-                            <h6 class="mb-1 fw-bold">{{ $item->product->name }}</h6>
-                            <p class="small text-muted mb-0">
-                                @php $attrValue = $item->variant->attributeValues->first(); @endphp
-                                @if($attrValue)
-                                    <span class="badge bg-light text-dark border fw-normal">
-                                        {{ $attrValue->attribute->name }}: {{ $item->variant->name }}
-                                    </span>
-                                @endif
-                                <span class="ms-2">Qty: {{ $item->quantity }}</span>
-                            </p>
+
+                    @php
+                        $alreadyReviewed = \App\Models\Rating::where('product_id', $item->product_id)
+                            ->where('customer_id', session('customer_id'))
+                            ->exists();
+                    @endphp
+
+                    <div class="p-3 {{ !$loop->last ? 'border-bottom' : '' }}">
+
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="{{ asset('storage/' . $item->product->image) }}" 
+                                alt="{{ $item->product->name }}" 
+                                class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;">
+                            
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1 fw-bold">{{ $item->product->name }}</h6>
+                                <p class="small text-muted mb-0">
+                                    @php $attrValue = $item->variant->attributeValues->first(); @endphp
+                                    @if($attrValue)
+                                        <span class="badge bg-light text-dark border fw-normal">
+                                            {{ $attrValue->attribute->name }}: {{ $item->variant->name }}
+                                        </span>
+                                    @endif
+                                    <span class="ms-2">Qty: {{ $item->quantity }}</span>
+                                </p>
+                            </div>
+
+                            <div class="text-end">
+                                <span class="fw-bold text-primary">₹{{ number_format($item->price * $item->quantity, 2) }}</span>
+                                <br>
+                                <small class="text-muted">₹{{ number_format($item->price, 2) }} each</small>
+                            </div>
                         </div>
-                        <div class="text-end">
-                            <span class="fw-bold text-primary">₹{{ number_format($item->price * $item->quantity, 2) }}</span>
-                            <br>
-                            <small class="text-muted">₹{{ number_format($item->price, 2) }} each</small>
+
+                        {{-- ⭐ REVIEW SECTION --}}
+                        @if($order->status === 'delivered')
+                        <div class="mt-2">
+
+                            @if(!$alreadyReviewed)
+                                <button class="btn btn-sm btn-outline-primary"
+                                    onclick="toggleReviewForm({{ $item->id }})">
+                                    ⭐ Rate Product
+                                </button>
+                            @else
+                                <span class="badge bg-success">✔ Already Reviewed</span>
+                            @endif
+
                         </div>
+
+                        {{-- REVIEW FORM --}}
+                        @if(!$alreadyReviewed)
+                        <div id="review-form-{{ $item->id }}" class="mt-3" style="display:none;">
+
+                            <div class="card border rounded-3 p-3">
+
+                                <form action="{{ route('ratings.store', $item->product_id) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+
+                                    {{-- Rating --}}
+                                    <div class="mb-2">
+                                        <label>Rating</label>
+                                        <select name="rating" class="form-control" required>
+                                            <option value="">Select</option>
+                                            <option value="5">5 ⭐</option>
+                                            <option value="4">4 ⭐</option>
+                                            <option value="3">3 ⭐</option>
+                                            <option value="2">2 ⭐</option>
+                                            <option value="1">1 ⭐</option>
+                                        </select>
+                                    </div>
+
+                                    {{-- Title --}}
+                                    <input type="text" name="title" class="form-control mb-2" placeholder="Review title">
+
+                                    {{-- Review --}}
+                                    <textarea name="review" class="form-control mb-2" placeholder="Write review"></textarea>
+
+                                    {{-- Images --}}
+                                    <input type="file" name="images[]" class="form-control mb-2" multiple>
+
+                                    <button class="btn btn-success btn-sm">Submit</button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+                        @endif
+
+                        @endif
+
                     </div>
+
                     @endforeach
                 </div>
             </div>
@@ -63,6 +133,8 @@
                 </div>
             </div>
         </div>
+
+        
 
         <!-- Right Column: Order Summary & Actions -->
         <div class="col-lg-4">
@@ -228,3 +300,17 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+function toggleReviewForm(id) {
+    let el = document.getElementById('review-form-' + id);
+
+    if (el.style.display === 'none') {
+        el.style.display = 'block';
+    } else {
+        el.style.display = 'none';
+    }
+}
+</script>
+@endpush

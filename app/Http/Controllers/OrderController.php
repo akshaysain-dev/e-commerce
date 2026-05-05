@@ -16,6 +16,8 @@ use Stripe\StripeClient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use App\Models\TaxOrShippingCharge;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderPlacedMail;
 
 class OrderController extends Controller
 {
@@ -42,8 +44,10 @@ class OrderController extends Controller
             return back()->with('error', 'Your cart is empty.');
         }
 
+        //dd($request->all());
         $address = $this->addressResolver->resolve($request, $customerId);
 
+        //dd($address);
         // ── Step 1: Sale apply ─────────────────────
         $saleResult  = $this->saleService->applyToCart($cartItems);
         $subtotal    = $saleResult['discounted_total']; // Using this as the base for tax/shipping
@@ -161,7 +165,7 @@ class OrderController extends Controller
 	else{
         $order->update(['status' => $request->status]);
 	}
-
+    
         return back()->with('success', 'Order #' . $order->unique_order_id . ' updated to "' . ucfirst(str_replace('_', ' ', $request->status)) . '".');
     }
 

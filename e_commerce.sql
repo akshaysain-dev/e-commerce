@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2026 at 12:18 PM
+-- Generation Time: Apr 16, 2026 at 11:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,9 +39,9 @@ CREATE TABLE `attributes` (
 --
 
 INSERT INTO `attributes` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Color', '2026-03-10 23:23:10', '2026-03-10 23:23:10'),
-(2, 'Size', '2026-03-10 23:26:51', '2026-03-10 23:26:51'),
-(3, 'Memory', '2026-03-11 02:28:07', '2026-03-11 02:28:07');
+(1, 'Color', '2026-04-13 09:12:24', '2026-04-13 09:12:24'),
+(2, 'Size', '2026-04-13 09:12:28', '2026-04-13 09:12:28'),
+(3, 'Storage', '2026-04-13 09:12:32', '2026-04-13 09:12:32');
 
 -- --------------------------------------------------------
 
@@ -62,24 +62,18 @@ CREATE TABLE `attribute_values` (
 --
 
 INSERT INTO `attribute_values` (`id`, `attribute_id`, `value`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Red', '2026-03-10 23:26:26', '2026-03-10 23:26:26'),
-(2, 1, 'Blue', '2026-03-10 23:26:35', '2026-03-10 23:26:35'),
-(3, 1, 'Green', '2026-03-10 23:26:42', '2026-03-10 23:26:42'),
-(4, 2, 'L', '2026-03-10 23:26:57', '2026-03-10 23:26:57'),
-(6, 2, 'M', '2026-03-10 23:27:11', '2026-03-10 23:27:11'),
-(7, 2, 'XL', '2026-03-10 23:27:21', '2026-03-10 23:27:21'),
-(8, 2, 'XXL', '2026-03-10 23:27:30', '2026-03-10 23:27:30'),
-(9, 1, 'Black', '2026-03-10 23:36:03', '2026-03-10 23:36:03'),
-(10, 3, '128 GB + 6GB', '2026-03-11 02:28:33', '2026-03-11 02:28:33'),
-(11, 3, '128 GB + 8 GB', '2026-03-11 02:28:54', '2026-03-11 02:28:54'),
-(12, 3, '256 GB + 8GB', '2026-03-11 02:29:26', '2026-03-11 02:29:26'),
-(13, 3, '256 GB + 12GB', '2026-03-11 02:29:39', '2026-03-11 02:29:39'),
-(15, 3, '512 GB + 12GB', '2026-03-11 02:30:09', '2026-03-11 02:30:09'),
-(16, 1, 'Golden', '2026-03-20 03:46:44', '2026-03-20 03:46:44'),
-(17, 2, 'Black, M', '2026-03-20 22:36:10', '2026-03-20 22:36:10'),
-(18, 2, 'Blue, XL', '2026-03-20 22:36:10', '2026-03-20 22:36:10'),
-(19, 2, 'L, XXL', '2026-03-20 22:36:10', '2026-03-20 22:36:10'),
-(20, 3, '1TB + 12GB', '2026-03-23 09:35:53', '2026-03-23 09:35:53');
+(1, 1, 'Red', '2026-04-13 09:12:38', '2026-04-13 09:12:38'),
+(2, 2, 'L', '2026-04-13 09:12:44', '2026-04-13 09:12:44'),
+(3, 2, 'M', '2026-04-13 09:12:49', '2026-04-13 09:12:49'),
+(4, 2, 'XL', '2026-04-13 09:12:58', '2026-04-13 09:12:58'),
+(5, 1, 'XXL', '2026-04-13 09:13:04', '2026-04-13 09:13:04'),
+(6, 3, '4GB + 64GB', '2026-04-13 09:13:26', '2026-04-13 09:13:26'),
+(7, 3, '8GB + 128GB', '2026-04-13 09:13:40', '2026-04-13 09:13:40'),
+(8, 3, '8GB + 256GB', '2026-04-13 09:14:11', '2026-04-13 09:14:11'),
+(9, 3, '12GB + 256GB', '2026-04-13 09:14:32', '2026-04-13 09:14:32'),
+(10, 1, 'Gray', '2026-04-13 09:22:31', '2026-04-13 09:22:31'),
+(11, 1, 'Gold', '2026-04-13 09:22:37', '2026-04-13 09:22:37'),
+(12, 1, 'Purple', '2026-04-13 09:22:43', '2026-04-13 09:22:43');
 
 -- --------------------------------------------------------
 
@@ -97,33 +91,13 @@ CREATE TABLE `attribute_value_product_variant` (
 --
 
 INSERT INTO `attribute_value_product_variant` (`variant_id`, `attribute_value_id`) VALUES
-(7, 9),
-(9, 4),
-(13, 11),
-(8, 2),
+(4, 2),
+(5, 3),
 (6, 4),
-(10, 2),
-(2, 16),
-(2, 16),
-(2, 16),
-(2, 16),
-(2, 16),
-(2, 16),
-(1, 7),
-(4, 11),
-(5, 12),
-(12, 10),
-(14, 11),
-(15, 12),
-(16, 12),
-(17, 4),
-(18, 6),
-(19, 7),
-(20, 13),
-(21, 15),
-(22, 20),
-(3, 10),
-(23, 6);
+(7, 6),
+(8, 7),
+(9, 10),
+(10, 11);
 
 -- --------------------------------------------------------
 
@@ -166,6 +140,13 @@ CREATE TABLE `cache` (
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `cache`
+--
+
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
+('myshop-cache-boost.roster.scan', 'a:2:{s:6:\"roster\";O:21:\"Laravel\\Roster\\Roster\":3:{s:13:\"\0*\0approaches\";O:29:\"Illuminate\\Support\\Collection\":2:{s:8:\"\0*\0items\";a:0:{}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}s:11:\"\0*\0packages\";O:32:\"Laravel\\Roster\\PackageCollection\":2:{s:8:\"\0*\0items\";a:10:{i:0;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:1;s:13:\"\0*\0constraint\";s:5:\"^12.0\";s:10:\"\0*\0package\";E:37:\"Laravel\\Roster\\Enums\\Packages:LARAVEL\";s:14:\"\0*\0packageName\";s:17:\"laravel/framework\";s:10:\"\0*\0version\";s:7:\"12.53.0\";s:6:\"\0*\0dev\";b:0;}i:1;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:0;s:13:\"\0*\0constraint\";s:7:\"v0.3.13\";s:10:\"\0*\0package\";E:37:\"Laravel\\Roster\\Enums\\Packages:PROMPTS\";s:14:\"\0*\0packageName\";s:15:\"laravel/prompts\";s:10:\"\0*\0version\";s:6:\"0.3.13\";s:6:\"\0*\0dev\";b:0;}i:2;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:1;s:13:\"\0*\0constraint\";s:5:\"^11.1\";s:10:\"\0*\0package\";E:35:\"Laravel\\Roster\\Enums\\Packages:SCOUT\";s:14:\"\0*\0packageName\";s:13:\"laravel/scout\";s:10:\"\0*\0version\";s:6:\"11.1.0\";s:6:\"\0*\0dev\";b:0;}i:3;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:1;s:13:\"\0*\0constraint\";s:5:\"^5.26\";s:10:\"\0*\0package\";E:39:\"Laravel\\Roster\\Enums\\Packages:SOCIALITE\";s:14:\"\0*\0packageName\";s:17:\"laravel/socialite\";s:10:\"\0*\0version\";s:6:\"5.26.1\";s:6:\"\0*\0dev\";b:0;}i:4;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:0;s:13:\"\0*\0constraint\";s:6:\"v0.5.9\";s:10:\"\0*\0package\";E:33:\"Laravel\\Roster\\Enums\\Packages:MCP\";s:14:\"\0*\0packageName\";s:11:\"laravel/mcp\";s:10:\"\0*\0version\";s:5:\"0.5.9\";s:6:\"\0*\0dev\";b:1;}i:5;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:1;s:13:\"\0*\0constraint\";s:5:\"^1.24\";s:10:\"\0*\0package\";E:34:\"Laravel\\Roster\\Enums\\Packages:PINT\";s:14:\"\0*\0packageName\";s:12:\"laravel/pint\";s:10:\"\0*\0version\";s:6:\"1.27.1\";s:6:\"\0*\0dev\";b:1;}i:6;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:1;s:13:\"\0*\0constraint\";s:5:\"^1.41\";s:10:\"\0*\0package\";E:34:\"Laravel\\Roster\\Enums\\Packages:SAIL\";s:14:\"\0*\0packageName\";s:12:\"laravel/sail\";s:10:\"\0*\0version\";s:6:\"1.53.0\";s:6:\"\0*\0dev\";b:1;}i:7;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:1;s:13:\"\0*\0constraint\";s:4:\"^3.8\";s:10:\"\0*\0package\";E:34:\"Laravel\\Roster\\Enums\\Packages:PEST\";s:14:\"\0*\0packageName\";s:12:\"pestphp/pest\";s:10:\"\0*\0version\";s:5:\"3.8.5\";s:6:\"\0*\0dev\";b:1;}i:8;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:0;s:13:\"\0*\0constraint\";s:7:\"11.5.50\";s:10:\"\0*\0package\";E:37:\"Laravel\\Roster\\Enums\\Packages:PHPUNIT\";s:14:\"\0*\0packageName\";s:15:\"phpunit/phpunit\";s:10:\"\0*\0version\";s:7:\"11.5.50\";s:6:\"\0*\0dev\";b:1;}i:9;O:22:\"Laravel\\Roster\\Package\":6:{s:9:\"\0*\0direct\";b:0;s:13:\"\0*\0constraint\";s:0:\"\";s:10:\"\0*\0package\";E:41:\"Laravel\\Roster\\Enums\\Packages:TAILWINDCSS\";s:14:\"\0*\0packageName\";s:11:\"tailwindcss\";s:10:\"\0*\0version\";s:5:\"4.2.2\";s:6:\"\0*\0dev\";b:1;}}s:28:\"\0*\0escapeWhenCastingToString\";b:0;}s:21:\"\0*\0nodePackageManager\";E:43:\"Laravel\\Roster\\Enums\\NodePackageManager:NPM\";}s:9:\"timestamp\";i:1776309487;}', 1776395887);
+
 -- --------------------------------------------------------
 
 --
@@ -194,13 +175,6 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `customer_id`, `product_id`, `product_variant_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(14, 9, 1, 1, 1, '2026-03-23 10:17:46', '2026-03-23 10:17:46');
-
 -- --------------------------------------------------------
 
 --
@@ -223,11 +197,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `position`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Men\'s', 'mens', 2, NULL, 1, '2026-03-06 22:25:42', '2026-04-08 09:24:40'),
-(3, 'Women\'s', 'womens', 4, NULL, 1, '2026-03-06 22:56:06', '2026-04-08 09:24:40'),
-(4, 'Electronic', 'electronic', 5, NULL, 1, '2026-03-07 01:36:54', '2026-04-08 09:24:40'),
-(5, 'Home', 'home', 3, NULL, 1, '2026-03-10 03:42:27', '2026-04-08 09:24:40'),
-(6, 'Mobiles', 'moblies', 1, NULL, 1, '2026-03-10 03:49:16', '2026-04-08 09:24:40');
+(1, 'Men\'s', 'mens', 5, NULL, 1, '2026-03-06 22:25:42', '2026-04-15 08:37:00'),
+(3, 'Women\'s', 'womens', 2, NULL, 1, '2026-03-06 22:56:06', '2026-04-15 08:37:00'),
+(4, 'Electronic', 'electronic', 3, NULL, 1, '2026-03-07 01:36:54', '2026-04-15 08:37:00'),
+(5, 'Home', 'home', 1, NULL, 1, '2026-03-10 03:42:27', '2026-04-15 08:37:00'),
+(6, 'Mobiles', 'moblies', 4, NULL, 1, '2026-03-10 03:49:16', '2026-04-15 08:37:00');
 
 -- --------------------------------------------------------
 
@@ -256,16 +230,10 @@ CREATE TABLE `coupons` (
 --
 
 INSERT INTO `coupons` (`id`, `name`, `code`, `discount`, `type`, `expires_in_days`, `expires_at`, `generated_for`, `used_by`, `is_used`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'LuckyCUS', '3XH0LXTH', 200.00, 'fixed', 2, '2026-03-24 20:38:20', NULL, 1, 1, 1, '2026-03-22 20:34:27', '2026-03-22 20:45:15'),
-(5, 'Welcome Gift — New', 'WELCOME0E524B', 10.00, 'percent', 30, '2026-04-21 22:43:20', 9, NULL, 0, 1, '2026-03-22 22:43:20', '2026-03-22 22:43:20'),
-(6, 'New', 'RAY01UGW', 200.00, 'fixed', 5, '2026-03-30 03:30:23', NULL, 1, 1, 1, '2026-03-25 03:30:23', '2026-03-25 03:38:28'),
-(7, 'Test Coupon', 'K6VIEHQH', 200.00, 'fixed', 5, '2026-03-30 03:43:51', NULL, 1, 1, 1, '2026-03-25 03:43:51', '2026-03-25 03:44:16'),
-(8, 'fsdfsdfdds', 'OHHG3QBZ', 100.00, 'fixed', 5, '2026-03-30 03:47:50', NULL, 1, 1, 1, '2026-03-25 03:47:50', '2026-03-25 03:47:58'),
-(9, 'dsfgdsgdf', 'NQLTER2F', 200.00, 'fixed', 5, '2026-03-30 03:53:06', NULL, 1, 1, 1, '2026-03-25 03:53:06', '2026-03-25 03:54:29'),
-(10, 'gfdgdfgdfg', 'G6O6O8KP', 10.00, 'percent', 2, '2026-03-27 03:56:58', NULL, 1, 1, 1, '2026-03-25 03:56:58', '2026-03-25 04:04:19'),
-(11, 'Welcome Gift — New Customer', 'WELCOME9ABE75', 10.00, 'percent', 30, '2026-04-25 08:28:25', 10, 10, 1, 1, '2026-03-26 08:28:25', '2026-03-26 08:38:53'),
-(12, 'fgdfgfgfghf', 'X0U9601J', 200.00, 'fixed', 4, '2026-03-30 08:34:57', NULL, 10, 1, 1, '2026-03-26 08:34:57', '2026-03-26 08:37:52'),
-(13, 'sfsdfdsfsd', 'I0A8OC3H', 50.00, 'fixed', 2, '2026-03-28 08:49:55', NULL, 10, 1, 1, '2026-03-26 08:49:55', '2026-03-26 08:50:40');
+(4, 'Welcome Gift — Akshay Sain', 'WELCOME23459F', 10.00, 'percent', 30, '2026-05-15 07:24:34', 22, NULL, 0, 1, '2026-04-15 07:24:34', '2026-04-15 07:24:34'),
+(5, 'Welcome Gift — Akshay Sain', 'WELCOME370899', 10.00, 'percent', 30, '2026-05-15 09:42:59', 23, NULL, 0, 1, '2026-04-15 09:42:59', '2026-04-15 09:42:59'),
+(6, 'Welcome Gift — Abhimanyu Kumar', 'WELCOME5DA636', 10.00, 'percent', 30, '2026-05-15 09:51:33', 24, NULL, 0, 1, '2026-04-15 09:51:33', '2026-04-15 09:51:33'),
+(7, 'Welcome Gift — Abhimanyu Kumar', 'WELCOME7596DC', 10.00, 'percent', 30, '2026-05-15 09:58:31', 25, NULL, 0, 1, '2026-04-15 09:58:31', '2026-04-15 09:58:31');
 
 -- --------------------------------------------------------
 
@@ -275,9 +243,12 @@ INSERT INTO `coupons` (`id`, `name`, `code`, `discount`, `type`, `expires_in_day
 
 CREATE TABLE `customers` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `zoho_id` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `phone` varchar(20) NOT NULL,
+  `google_id` varchar(255) DEFAULT NULL,
+  `avatar` text DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `area` text DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
@@ -294,11 +265,54 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `password`, `area`, `city`, `state`, `country`, `postal_code`, `remember_token`, `created_at`, `updated_at`, `status`) VALUES
-(1, 'Akshay Sain', 'akashaysain247340@gmail.com', '9027116545', '$2y$12$Y8yJhV2i6kVWlsRkduQ52..Tqvjg6PBu36rbzQquVbvkjSsaOzafy', 'Nakur To ambehta Road , Chhuchhakpur', 'Saharanpur', 'UP', 'India', '247340', NULL, '2026-03-07 03:32:21', '2026-03-17 19:55:38', 1),
-(4, 'Test User', 'test@gmail.com', '9562654564', '$2y$12$LCZjCMfAK/PkXHOtb8vdMez5YiLrjraotVgpEJoj9rU0IvASE06cG', 'Sre', 'Sre', 'UP', 'India', '568545', NULL, '2026-03-17 03:39:38', '2026-04-03 02:06:21', 1),
-(9, 'New', 'new@gmail.com', '9854754125', '$2y$12$d2eVD4h4nkM0EIVSBn7VxetEiriGpIuRL5zz7LKanRhP4NXZVZlSK', 'Mohali', 'Chandigrah', 'Punjab', 'India', '758456', NULL, '2026-03-22 22:43:20', '2026-03-22 22:43:20', 1),
-(10, 'New Customer', 'newcus@gmail.com', '9565524125', '$2y$12$kCxW04asLLMmJ2Pd4WL31eXrtLo0wMaCR9X41CuM8nJIzZFAFzOHq', 'ssfdsd', 'dsfdsd', 'sdfsdfsd', 'sfsdds', '524125', NULL, '2026-03-26 08:28:25', '2026-03-26 08:28:25', 1);
+INSERT INTO `customers` (`id`, `zoho_id`, `name`, `email`, `google_id`, `avatar`, `phone`, `password`, `area`, `city`, `state`, `country`, `postal_code`, `remember_token`, `created_at`, `updated_at`, `status`) VALUES
+(1, NULL, 'Akshay Sain', 'akashaysain247340@gmail.com', NULL, NULL, '9027116545', '$2y$12$Y8yJhV2i6kVWlsRkduQ52..Tqvjg6PBu36rbzQquVbvkjSsaOzafy', 'Nakur To ambehta Road , Chhuchhakpur', 'Saharanpur', 'UP', 'India', '247340', NULL, '2026-03-07 03:32:21', '2026-04-15 06:59:08', 1),
+(9, NULL, 'New', 'new@gmail.com', NULL, NULL, '9854754125', '$2y$12$d2eVD4h4nkM0EIVSBn7VxetEiriGpIuRL5zz7LKanRhP4NXZVZlSK', 'Mohali', 'Chandigrah', 'Punjab', 'India', '758456', NULL, '2026-03-22 22:43:20', '2026-04-15 06:51:22', 1),
+(10, NULL, 'New Customer', 'newcus@gmail.com', NULL, NULL, '9565524125', '$2y$12$kCxW04asLLMmJ2Pd4WL31eXrtLo0wMaCR9X41CuM8nJIzZFAFzOHq', 'ssfdsd', 'dsfdsd', 'sdfsdfsd', 'sfsdds', '524125', NULL, '2026-03-26 08:28:25', '2026-03-26 08:28:25', 1),
+(13, '1276511000000606006', 'Akshay', 'akshaysain760@gmail.com', '104056625080160840119', 'https://lh3.googleusercontent.com/a/ACg8ocL4t1UbnBg3PfKEkbzvaaWJI_FdOK8N_T_3Ei_Dd7Qpqdppfg=s96-c', '9412315083', '$2y$12$hQFCsaq3fQ9XhN647TFwlOHv7bJQIiKt.VYHJquZg.gAmFjidEBE.', 'Nakur', 'Saharanpur', 'Up', 'India', '247340', 'vGpIiDN1w6QY45FdS7lPbHhOxlCWPNajY8r5Fx19UVNzLWteKyk2dnMrHsI2', '2026-04-10 04:15:09', '2026-04-16 07:44:29', 1),
+(14, NULL, 'Deepak Kumar', 'deepakkr8156@gmail.com', '115098243204406431375', 'https://lh3.googleusercontent.com/a/ACg8ocJXMGBdVta7_rhYebQpoL2fHvGc7VPYzeuT4yCUz68Ev-jQ=s96-c', NULL, '$2y$12$OMzM80AKfhx4NL40f90z6u4jjiYKiqgO/f1DkljKDPIE8kZZZkvYS', NULL, NULL, NULL, NULL, NULL, 'cPz04LXKPSSKpo9L0OS4r22dNitm62OpTR8vF6T94PObCfO3mXTCIwoZOoT5', '2026-04-10 04:19:38', '2026-04-10 09:38:51', 1),
+(16, NULL, 'Abhimanyu Katoch', 'abhimanyyyukatoch8561@gmail.com', NULL, NULL, '6154360708', '$2y$12$SwJTAmZj7yzKCNaSVOs52.38DTKIUnqWwTIYG3XBplBa6BwxAb5YW', '2232', 'MOHALI', 'Punjab', 'India', '143001', NULL, '2026-04-10 09:18:46', '2026-04-10 09:18:46', 1),
+(18, NULL, 'Akshay Sain', 'akshaysain940@gmail.com', NULL, NULL, '9412315083', '$2y$12$iJiWZ5tqb4JJkNbJU56Y2.NFJ.KXo1LFq3cLD4EocP/HXozN3DG2e', 'Nakur', 'Saharanpur', 'Up', 'India', '247340', NULL, '2026-04-13 08:51:13', '2026-04-13 08:51:13', 1),
+(25, '1276511000000594013', 'Abhimanyu Kumar', 'abhimanyukatoch8561@gmail.com', NULL, NULL, '9412315083', '$2y$12$qfXzwlb.Zg.apVBlFAFcueaQRyX3Pb4K42WeeFRc98xygRI4how0O', 'Nakur', 'Saharanpur', 'Uttar Pradesh', 'India', '247340', NULL, '2026-04-15 09:58:26', '2026-04-15 10:00:24', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_verifications`
+--
+
+CREATE TABLE `customer_verifications` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `postal_code` varchar(255) NOT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `otp` varchar(10) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_otps`
+--
+
+CREATE TABLE `email_otps` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `customer_id` bigint(20) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `otp` varchar(255) NOT NULL,
+  `otp_for` varchar(255) DEFAULT NULL,
+  `expires_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -415,8 +429,7 @@ CREATE TABLE `margins` (
 --
 
 INSERT INTO `margins` (`id`, `type_id`, `name`, `percentage`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Retail', 15.00, '2026-03-27 02:58:37', '2026-03-27 02:58:37'),
-(3, 2, 'NEW', 5.00, '2026-03-27 05:47:18', '2026-03-27 05:47:18');
+(1, 1, 'Retail', 10.00, '2026-04-13 09:04:30', '2026-04-13 09:04:30');
 
 -- --------------------------------------------------------
 
@@ -475,7 +488,17 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (47, '2026_03_27_074515_create_margins_table', 30),
 (48, '2026_03_30_082914_create_guest_carts_table', 31),
 (49, '2026_04_06_132102_create_tax_or_shipping_charge', 32),
-(50, '2026_04_08_120727_add_position_to_categories', 33);
+(50, '2026_04_08_120727_add_position_to_categories', 33),
+(51, '2026_04_10_085034_add_google_fields_to_customers_table', 34),
+(52, '2026_04_10_102036_create_password_reset_tokens_table', 35),
+(53, '2026_04_10_141121_create_customer_verifications_table', 35),
+(55, '2026_04_13_113353_create_email_otps_table', 36),
+(56, '2026_04_15_095349_add_zoho_id_to_customers_table', 37),
+(57, '2026_04_16_084507_add_google_2fa_to_users_table', 38),
+(58, '2026_04_16_110436_add_images_to_ratings_table', 39),
+(59, '2026_04_16_122127_create_review_replies_table', 40),
+(60, '2026_04_16_144920_add_main_price_to_order_items_table', 41),
+(61, '2026_04_16_150509_add_status_to_ratings_table', 42);
 
 -- --------------------------------------------------------
 
@@ -498,24 +521,23 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`id`, `customer_id`, `title`, `message`, `is_read`, `created_at`, `updated_at`) VALUES
-(8, 4, 'Welcome on MyShop.', 'Your account has been activated now for using this store.', 0, '2026-03-17 03:39:38', '2026-03-17 03:40:54'),
-(22, 4, 'Login Your account.', 'Your account has been logged in new device.', 0, '2026-03-18 22:49:09', '2026-03-18 22:49:09'),
-(23, 4, 'New Product Added in Cart', 'New product Added in Cart for proccessed in checkout.', 0, '2026-03-18 23:44:04', '2026-03-18 23:44:04'),
-(24, 4, 'New Product Added in Wishlist', 'Your new product Added in wishlist please check your wishlist and place order.', 0, '2026-03-18 23:45:29', '2026-03-18 23:45:29'),
-(25, 4, 'New Product Added in Wishlist', 'Your new product Added in wishlist please check your wishlist and place order.', 0, '2026-03-18 23:46:32', '2026-03-18 23:46:32'),
-(49, 9, 'Welcome on MyShop.', 'Your account has been activated now and your First Order Discount in 20% Coupon is WELCOME0E524B', 0, '2026-03-22 22:43:20', '2026-03-22 22:43:20'),
-(50, 9, 'New Product Added in Cart', 'New product Added in Cart for proccessed in checkout.', 0, '2026-03-22 22:51:12', '2026-03-22 22:51:12'),
-(60, 9, 'Login Your account.', 'Your account has been logged in new device.', 0, '2026-03-23 10:16:09', '2026-03-23 10:16:09'),
-(61, 9, 'New Product Added in Cart', 'New product Added in Cart for proccessed in checkout.', 0, '2026-03-23 10:17:46', '2026-03-23 10:17:46'),
-(85, 10, 'Welcome on MyShop.', 'Your account has been activated now and yor First Order Discount in 20% Coupon is WELCOME9ABE75', 0, '2026-03-26 08:28:25', '2026-03-26 08:28:25'),
-(86, 10, 'New Product Added in Cart', 'New product Added in Cart for proccessed in checkout.', 0, '2026-03-26 08:29:51', '2026-03-26 08:29:51'),
-(87, 10, 'New Order Placed', 'Your order #ORD-69C4EEA36DB40 has been successfully placed.', 0, '2026-03-26 08:30:51', '2026-03-26 08:30:51'),
-(88, 10, 'New Product Added in Cart', 'New product Added in Cart for proccessed in checkout.', 0, '2026-03-26 08:35:14', '2026-03-26 08:35:14'),
-(89, 10, 'New Order Placed', 'Your order #ORD-69C4F060AC30B has been successfully placed.', 0, '2026-03-26 08:37:52', '2026-03-26 08:37:52'),
-(90, 10, 'New Product Added in Cart', 'New product Added in Cart for proccessed in checkout.', 0, '2026-03-26 08:38:45', '2026-03-26 08:38:45'),
-(91, 10, 'New Order Placed', 'Your order #ORD-69C4F09D81D74 has been successfully placed.', 0, '2026-03-26 08:38:53', '2026-03-26 08:38:53'),
-(92, 10, 'New Product Added in Cart', 'New product Added in Cart for proccessed in checkout.', 0, '2026-03-26 08:49:15', '2026-03-26 08:49:15'),
-(93, 10, 'New Order Placed', 'Your order #ORD-69C4F33DE02E2 has been successfully placed.', 0, '2026-03-26 08:50:40', '2026-03-26 08:50:40');
+(1, 13, 'New Product Added in Cart', 'New product Added in Cart for processing in checkout.', 0, '2026-04-13 09:27:25', '2026-04-13 09:27:25'),
+(2, 13, 'New Product Added in Cart', 'New product Added in Cart for processing in checkout.', 0, '2026-04-13 09:28:37', '2026-04-13 09:28:37'),
+(3, 13, 'New Product Added in Cart', 'New product Added in Cart for processing in checkout.', 0, '2026-04-13 09:29:05', '2026-04-13 09:29:05'),
+(4, 13, 'New Product Added in Cart', 'New product Added in Cart for processing in checkout.', 0, '2026-04-13 09:29:19', '2026-04-13 09:29:19'),
+(10, 1, 'Login Your account.', 'Your account has been logged in on a new device.', 0, '2026-04-15 06:49:27', '2026-04-15 06:49:27'),
+(11, 1, 'Login Your account.', 'Your account has been logged in on a new device.', 0, '2026-04-15 06:51:13', '2026-04-15 06:51:13'),
+(12, 1, 'Login Your account.', 'Your account has been logged in on a new device.', 0, '2026-04-15 06:53:04', '2026-04-15 06:53:04'),
+(13, 1, 'Login Your account.', 'Your account has been logged in on a new device.', 0, '2026-04-15 06:59:32', '2026-04-15 06:59:32'),
+(17, 25, 'Welcome on MyShop.', 'Your coupon is WELCOME7596DC', 0, '2026-04-15 09:58:31', '2026-04-15 09:58:31'),
+(18, 13, 'Login Your account.', 'Your account has been logged in via Google.', 0, '2026-04-16 05:02:13', '2026-04-16 05:02:13'),
+(19, 13, 'New Order Placed', 'Your order #ORD-69E06DCE1FB07 has been successfully placed.', 0, '2026-04-16 05:04:41', '2026-04-16 05:04:41'),
+(20, 1, 'Login Your account.', 'Your account has been logged in on a new device.', 0, '2026-04-16 07:44:08', '2026-04-16 07:44:08'),
+(21, 1, 'New Product Added in Cart', 'New product Added in Cart for processing in checkout.', 0, '2026-04-16 07:55:43', '2026-04-16 07:55:43'),
+(22, 1, 'New Product Added in Cart', 'New product Added in Cart for processing in checkout.', 0, '2026-04-16 07:55:48', '2026-04-16 07:55:48'),
+(23, 1, 'New Order Placed', 'Your order #ORD-69E09611AA414 has been successfully placed.', 0, '2026-04-16 07:56:07', '2026-04-16 07:56:07'),
+(24, 1, 'New Product Added in Cart', 'New product Added in Cart for processing in checkout.', 0, '2026-04-16 08:24:04', '2026-04-16 08:24:04'),
+(25, 1, 'New Order Placed', 'Your order #ORD-69E09CA93C36D has been successfully placed.', 0, '2026-04-16 08:24:13', '2026-04-16 08:24:13');
 
 -- --------------------------------------------------------
 
@@ -547,24 +569,9 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `unique_order_id`, `customer_id`, `total_amount`, `refunded_amount`, `coupon_code`, `discount_amount`, `status`, `delivery_date`, `payment_method`, `transaction_id`, `card_last_four`, `card_holder_name`, `created_at`, `updated_at`, `address`) VALUES
-(1, 'ORD-69C0A0EFF1575', 1, 1098.00, NULL, NULL, 0.00, 'delivered', '2026-03-26', 'COD', NULL, NULL, NULL, '2026-03-22 20:39:52', '2026-03-26 10:12:27', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(2, 'ORD-69C0A233E7802', 1, 354.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-22 20:45:15', '2026-03-22 21:24:00', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(3, 'ORD-69C0EFFAF3F72', 1, 29999.00, 29099.00, NULL, 0.00, 'cancelled', NULL, 'STRIPE', 'pi_3TE3CiCSipI1MBTM0odSJBRc', '4242', NULL, '2026-03-23 07:47:34', '2026-03-25 06:54:44', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(4, 'ORD-69C0F0CE21EB0', 1, 29999.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-23 07:50:38', '2026-03-23 07:50:38', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(5, 'ORD-69C357AE1D2AF', 1, 139999.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-25 03:34:06', '2026-03-25 03:34:06', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(6, 'ORD-69C35884146E8', 1, 399.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-25 03:37:40', '2026-03-25 03:37:40', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(7, 'ORD-69C358B42BF88', 1, 449.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-25 03:38:28', '2026-03-25 03:38:28', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(8, 'ORD-69C35A1029554', 1, 399.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-25 03:44:16', '2026-03-25 03:44:16', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(9, 'ORD-69C35AEE36333', 1, 354.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-25 03:47:58', '2026-03-25 06:14:38', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(10, 'ORD-69C35C752777B', 1, 449.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-25 03:54:29', '2026-03-25 06:16:58', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(11, 'ORD-69C35EC39F70D', 1, 354.00, NULL, 'G6O6O8KP', 35.40, 'delivered', NULL, 'COD', NULL, NULL, NULL, '2026-03-25 04:04:19', '2026-03-25 05:15:47', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(12, 'ORD-69C4BDC153FC6', 1, 139999.00, NULL, NULL, 0.00, 'paid', NULL, 'STRIPE', 'pi_3TF63KCSipI1MBTM18OCQ1Ij', '4242', NULL, '2026-03-26 05:02:07', '2026-03-26 05:02:07', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(13, 'ORD-69C4D4A8EB62A', 1, 370.00, NULL, NULL, 0.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-26 06:39:36', '2026-03-26 06:39:36', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
-(14, 'ORD-69C4EEA36DB40', 10, 139999.10, NULL, NULL, 0.00, 'paid', NULL, 'STRIPE', 'pi_3TF9JACSipI1MBTM01OBlhXa', '4242', NULL, '2026-03-26 08:30:51', '2026-03-26 08:30:51', 'ssfdsd, dsfdsd, sdfsdfsd, sfsdds - 524125'),
-(15, 'ORD-69C4F060AC30B', 10, 5499.00, NULL, 'X0U9601J', 200.00, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-26 08:37:52', '2026-03-26 08:37:52', 'ssfdsd, dsfdsd, sdfsdfsd, sfsdds - 524125'),
-(16, 'ORD-69C4F09D81D74', 10, 14999.00, NULL, 'WELCOME9ABE75', 1499.90, 'pending', NULL, 'COD', NULL, NULL, NULL, '2026-03-26 08:38:53', '2026-03-26 08:38:53', 'ssfdsd, dsfdsd, sdfsdfsd, sfsdds - 524125'),
-(17, 'ORD-69C4F33DE02E2', 10, 354.00, NULL, 'I0A8OC3H', 50.00, 'delivered', '2026-03-26', 'STRIPE', 'pi_3TF9cACSipI1MBTM02oG0MVz', '4242', NULL, '2026-03-26 08:50:40', '2026-03-26 09:23:05', 'ssfdsd, dsfdsd, sdfsdfsd, sfsdds - 524125'),
-(18, 'ORD-69C5FD353AEC3', 1, 313.95, NULL, NULL, 0.00, 'shipped', NULL, 'COD', NULL, NULL, NULL, '2026-03-27 03:44:53', '2026-04-08 10:03:29', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340');
+(1, 'ORD-69E06DCE1FB07', 13, 2406.69, NULL, NULL, 0.00, 'delivered', '2026-04-16', 'STRIPE', 'pi_3TMi64CSipI1MBTM0wbUYYI8', '4242', NULL, '2026-04-16 05:04:37', '2026-04-16 06:05:36', 'Nakur, Saharanpur, Up, India - 247340'),
+(2, 'ORD-69E09611AA414', 1, 13871.81, NULL, NULL, 0.00, 'delivered', '2026-04-16', 'COD', NULL, NULL, NULL, '2026-04-16 07:56:01', '2026-04-16 07:57:06', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340'),
+(3, 'ORD-69E09CA93C36D', 1, 514.26, NULL, NULL, 0.00, 'delivered', '2026-04-16', 'COD', NULL, NULL, NULL, '2026-04-16 08:24:09', '2026-04-16 08:24:19', 'Nakur To ambehta Road , Chhuchhakpur, Saharanpur, UP, India - 247340');
 
 -- --------------------------------------------------------
 
@@ -579,6 +586,7 @@ CREATE TABLE `order_items` (
   `product_variant_id` bigint(20) UNSIGNED NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
+  `main_price` decimal(10,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -587,24 +595,11 @@ CREATE TABLE `order_items` (
 -- Dumping data for table `order_items`
 --
 
-INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_variant_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 1, 10, 6, 1, 499.00, '2026-03-22 20:39:52', '2026-03-22 20:39:52'),
-(2, 1, 10, 7, 1, 599.00, '2026-03-22 20:39:52', '2026-03-22 20:39:52'),
-(3, 2, 1, 1, 1, 354.00, '2026-03-22 20:45:15', '2026-03-22 20:45:15'),
-(4, 3, 9, 4, 1, 29999.00, '2026-03-23 07:47:34', '2026-03-23 07:47:34'),
-(5, 4, 9, 4, 1, 29999.00, '2026-03-23 07:50:38', '2026-03-23 07:50:38'),
-(6, 5, 4, 20, 1, 139999.00, '2026-03-25 03:34:06', '2026-03-25 03:34:06'),
-(7, 6, 11, 10, 1, 399.00, '2026-03-25 03:37:40', '2026-03-25 03:37:40'),
-(9, 8, 11, 10, 1, 399.00, '2026-03-25 03:44:16', '2026-03-25 03:44:16'),
-(10, 9, 1, 1, 1, 354.00, '2026-03-25 03:47:58', '2026-03-25 03:47:58'),
-(12, 11, 1, 1, 1, 354.00, '2026-03-25 04:04:19', '2026-03-25 04:04:19'),
-(13, 12, 9, 20, 1, 139999.00, '2026-03-26 05:02:07', '2026-03-26 05:02:07'),
-(14, 13, 2, 19, 1, 370.00, '2026-03-26 06:39:36', '2026-03-26 06:39:36'),
-(15, 14, 9, 20, 1, 139999.00, '2026-03-26 08:30:51', '2026-03-26 08:30:51'),
-(16, 15, 3, 2, 1, 5499.00, '2026-03-26 08:37:52', '2026-03-26 08:37:52'),
-(17, 16, 9, 12, 1, 14999.00, '2026-03-26 08:38:53', '2026-03-26 08:38:53'),
-(18, 17, 11, 1, 1, 354.00, '2026-03-26 08:50:40', '2026-03-26 08:50:40'),
-(19, 18, 1, 8, 1, 299.00, '2026-03-27 03:44:53', '2026-03-27 03:44:53');
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_variant_id`, `quantity`, `price`, `main_price`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 4, 5, 471.90, 429.00, '2026-04-16 05:04:37', '2026-04-16 05:04:37'),
+(2, 2, 3, 9, 1, 3958.90, 3599.00, '2026-04-16 07:56:01', '2026-04-16 07:56:01'),
+(3, 2, 2, 7, 1, 9843.90, 8949.00, '2026-04-16 07:56:01', '2026-04-16 07:56:01'),
+(4, 3, 1, 4, 1, 471.90, 429.00, '2026-04-16 08:24:09', '2026-04-16 08:24:09');
 
 -- --------------------------------------------------------
 
@@ -643,16 +638,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `user_id`, `name`, `description`, `image`, `images`, `status`, `created_at`, `updated_at`, `product_type_id`) VALUES
-(1, 1, 2, 'Men\'s t-shirt', 'Men\'s t-shirt', 'products/lwMBPNjhIEElIQx9mRl8Dk9zqw91Ud3LOhcbld5P.jpg', '[]', 1, '2026-03-20 23:48:00', '2026-03-27 09:12:09', 1),
-(2, 3, 2, 'Kurti', NULL, 'products/c9phxTK9BUKprfeCPzKvnW9FHl98rWFMelpdq0AW.webp', '[\"products\\/jkCmJLY60pIeBlZ33PRicvX4VqfiBCCAjZz11bdL.webp\",\"products\\/iF2pkcbglwwgTEayUBqSB20at0T8RhJyCvDJXiID.webp\",\"products\\/fwmEsEkwrAHJN7ytRRhR4KHYfwXmTafR2Myq0GHL.webp\"]', 1, '2026-03-20 23:48:00', '2026-03-23 08:17:34', 1),
-(3, 4, 2, 'Buds Air 7 Pro', 'Buds Air 7 Pro with 53dB ANC,360 Spatial Audio, 48hrs Playback, IP55 ,6 Mic Bluetooth Headset (Glory Beige, True Wireless)', 'products/OXRPTyAuHj42Spfk6Y6F8NYNYgpTwN2MMHYwyr65.webp', '[\"products\\/AiorWO8djv7EoHAmueydora4IKsOlEeqnx3C3Dn5.webp\",\"products\\/szXPRDJbgp97dD9A2Tto4LYoreu0imVGSdLTs6su.webp\",\"products\\/Gdo34JvNaWtOWXTH5xcU4Y5wcO2Ut0SHCIEUKnkH.webp\",\"products\\/pZEoAteS0RaUI3h8S4omxaIi4hUOIX84uPzEq0z1.webp\",\"products\\/Dqk4utGmVQIbI9UOilVo8izhzeE2FPjnFsnnHRsU.webp\",\"products\\/VLskNJ36zRazPTVjZM8KmWiArHUWErhe2SkiJqOB.webp\",\"products\\/lDEN2XbAFyQXTCldiLaP1Z9yQBJDmkEz2MRFVUFc.webp\",\"products\\/Uy0BaNm6IeymMp31k6yL89KZwTwcwSc2yqDeMT0O.webp\",\"products\\/OP2RI9r5mNk6zCeqPw4Ck5ix88XHkJOnszibEQz2.webp\"]', 1, '2026-03-20 23:48:00', '2026-03-20 23:48:00', 2),
-(4, 6, 2, 'Galaxy S26 Ultra 5G (Cobalt Violet, 256 GB)', 'Galaxy S26 Ultra 5G (Cobalt Violet, 256 GB) (12 GB RAM)', 'products/5y2m87XkQAZChvYNlybmXw801NpW3FkUGd4U8V1M.jpg', '[\"products\\/Rq7sx1CP0MBArmkuLWnLJjRWPqLYekUL4358s1B4.jpg\",\"products\\/3bT0R6BbNGM92mN4bFlK96bm6sUyiL0MqHR3X1EL.jpg\",\"products\\/NuOLb0vfZ02VmlRKtvkBB3YWrpYvtLE0Y9sCzjCx.jpg\",\"products\\/62oXJCdmgGZ01fUd37IVZcYQdFqdujqMrjlo9iIA.jpg\",\"products\\/cjDm8ra5Q5YF4dbfVbDBgYAQpRMnZ72Zam9up6cI.jpg\",\"products\\/TBvfmgbKEDRNfEwzfwF9cMD9vG7Hh4ZPokOg0PgX.jpg\",\"products\\/4DJNmmoHA6iCJqnovfgKmsdHOpGDLKCa9hpUML9y.jpg\",\"products\\/ZMS4kZpm5Krn8A5cIvYD8gppw2zn5scS9LUq9Xco.jpg\",\"products\\/OsqwWTcDKLdxZm5zM0purUWFjHfG0t8MJ9UtWpgZ.jpg\"]', 1, '2026-03-20 23:48:00', '2026-03-23 08:20:28', 2),
-(7, 6, 2, 'Galaxy F70e 5G (Limelight Green, 128 GB)', 'Galaxy F70e 5G (Limelight Green, 128 GB) (4GB RAM)', 'products/Vn7d1f1NG4x9jfSUzW2KUghyFSG9fKCdjaVn2xOF.webp', '[\"products\\/XWkrlEzySYIDHWHBP8ocU9XDZJvuF3b21gmw6Kim.webp\",\"products\\/4URvaPHKT8306XhYMUyUO1we9edCqj9YUjPF3EnT.webp\",\"products\\/17AVufOprmtU7hhnl95zD0vsBeoP7AoirxNhVy1O.webp\",\"products\\/lxaYQbnW2oBlZm7bHoxyMpaO3ZvVsQKmuf87rkWr.webp\",\"products\\/1NhoLxcl3rN0ipTq1HMpEEOg28H72y0qQ2wkUAae.webp\",\"products\\/0foW40Pf5DihVeNtiUgXgo0pATEa0uDQ5yWhvj7C.webp\",\"products\\/H3cunc2EWjZU9Bq5PYOvj9Vmw0UhReuBaPU84xKd.webp\",\"products\\/M5VC7cSWFImQLl58BQHYPnrSmpx0U58nBBnJA3Xr.webp\",\"products\\/f5kwFz3ShKYm4dWUhRvhhjVkFZIrZuSi7NUIodMf.webp\",\"products\\/67pKeWVEHHd4U3EjEvY0Iine8pyAxCZcMEtTfblO.webp\",\"products\\/gm2XcDh5wN37cEa2UxXmqGMmH4YWBo8KPeNAMjVh.webp\",\"products\\/RmTpPGq7hjsliJtPRwqGYCA0JHGf8hFo5RsLZA9Q.webp\"]', 1, '2026-03-20 23:48:00', '2026-03-20 23:48:00', 2),
-(8, 6, 2, 'Realme 15 5G (Flowing Silver, 256 GB)', 'Realme 15 5G (Flowing Silver, 256 GB) (8GB RAM)', 'products/Ggi7ffOvtPd1erWE8l3KAaoa6btTbO7wFmfnkXiE.webp', '[\"products\\/QElMLxZuMzobhqkGBsUevpUx4mzI87eg4M9DkGO9.webp\",\"products\\/VOBTWANaZXBeGVismdmW7sDAGpGwuJzn84jiWXT8.webp\",\"products\\/OuieCd0FZ6B9ChIaEoYVBQpXMUB6ggQvZf5zt59S.webp\",\"products\\/a8BfHrxDHnfYTxzerJaEmG8qBoTkfjCA4r32QR6x.webp\",\"products\\/ZMQufTx6MJ7bjutZiZ2OzDBW80bqAkPPqB65Nb3X.webp\",\"products\\/E7WkAdHpe9a06ujRbgiMhJCXOiCTRPpk7fPBFwe4.webp\",\"products\\/gbjSxIOvMr20yMnFqqTdtpGtnPc8SJsCY2XNGlg5.webp\",\"products\\/e81iwt0HsUYtAVlA5nOtXMh1wQmTGgVUjW5rrcSF.webp\",\"products\\/cIEOWwMPxTaQ3Lr9lANIuL2WWwZIzkNleaPcjjwZ.webp\"]', 1, '2026-03-20 23:48:00', '2026-03-20 23:48:00', 2),
-(9, 6, 2, 'Pova Curve 2 5G (Mystic Purple, 128 GB)', 'Pova Curve 2 5G (Mystic Purple, 128 GB) (8 GB RAM)', 'products/nOXAxiJe4YvWhPPKwUZts7W831zmvxIaRQ5vMPsn.webp', '[\"products\\/DtNVg8IMF1Cjt7Dqrqtr7tiekiZ0TNmqfTHsn04l.webp\",\"products\\/3sSsgXRR7Y8cUiiqD957zM3PnwdYt1x6rwrrYGIR.webp\",\"products\\/PqjWUUSxasxDd1ix7djHJnYjR0u9Qd5CXUhSB8tQ.webp\",\"products\\/18qUdyaBsU87nVLkQq5OTirbF0qsYdLW3x9cIrRr.webp\",\"products\\/f3oJo7carbyBh2yHgbpi6Wopmlc4nv4fEr9O58Y9.webp\",\"products\\/hr5PnCeuB53gxrhLTGa6agNoioqq0ds6jXQa0DLX.webp\",\"products\\/moL1z9IC2HdCvosKPvDTqXfiHV3RKCN63a2sRNRa.webp\",\"products\\/r26i6d0MStE2sAXpt1iUZimOS4m7ZrBL2nCUm49L.webp\",\"products\\/zUfbzJepGITUIN17pPBgROK51WzedXIdWzqOTQ9P.webp\",\"products\\/HH3qb5jj5IW2Fljou1J5k6JCwT0Isd7YtIxidlTW.webp\",\"products\\/QraL3CNe2Js5gOtiA9HFEO9vrmy1TPvP94YVGuLH.webp\",\"products\\/DAFof49FrR9f7Jd5YtmmFYfhpRaIKNhe0ZjgmriY.webp\",\"products\\/Tq2dGv6VVqX8WUYNWlF2TJ8m7AE92MbqFZ2YpOOX.webp\"]', 1, '2026-03-20 23:48:00', '2026-03-20 23:48:00', 2),
-(10, 1, 2, 'Athleo Comfortable Lightweight Sports Slip-On Running Shoes For Men', 'Athleo ATG-424 Comfortable Lightweight Breathable Durable Sports Slip-On Running Shoes For Men (Blue , 6)', 'products/o9C76T8xbpYFGCIrb2Iw7W9AcndOfCZiW0H3J26P.webp', '[\"products\\/e0fny8vsKvPoxuqIyGs0K4s7QeRYkownNbSFnybp.webp\",\"products\\/50T7LxSuUDPrK5vRjvPT8ccgaCnSSeyvqfGYGVmV.webp\",\"products\\/1G5V8mzoK1oqOEteuKIDKBFZeGLT9moJIO9WDQ9H.webp\",\"products\\/JIkWbK2rt9N46sBxVqhTDx4KxopbpBveYnTcJgam.webp\",\"products\\/pkUwUiR02yScMNaFf9lQs9qvvBc4FAIs6XN16Aaf.webp\",\"products\\/8Olep9lS0iyuR3pDDT0vNKNtFisrxDccTOGVdJop.webp\"]', 1, '2026-03-20 23:48:01', '2026-03-27 04:07:56', 2),
-(11, 1, 2, 'Men Regular Fit Checkered Spread Collar Casual Shirt', 'Men Regular Fit Checkered Spread Collar Casual Shirt', 'products/OQIymKRBZTUCw5YRHdaZl8vkis9D0lUb9CQ2VJSn.webp', '[\"products\\/aWIxSOlHe0SBLiW9hjzy7HYJMAoOoEu8GGpc2FkO.webp\",\"products\\/Ln5l59XbDeiw7gIywhRb5ohiJlOw1WdoXSY740ui.webp\"]', 1, '2026-03-20 23:48:01', '2026-03-27 09:30:34', 2),
-(12, 1, 2, 'gfdgdfg', 'dfgdfgdfgdf', 'products/dwimwVOf8l75c2g9PUicscZdQA4PtMsnpmSbY1CB.jpg', '[\"products\\/5OJRxusVXYuRH4Gu5f3NuTrB2d2JcGlkleo8lkr8.png\",\"products\\/LmlMkqtEAz38anDJ6jO1IzoEqmwH5bF27zodE49H.png\",\"products\\/oyyug0SCNpwIjw98db305lM9MJeoJweJ3dogWklX.jpg\"]', 1, '2026-04-08 07:06:51', '2026-04-08 07:12:56', 2);
+(1, 1, 2, 'Lymio Polo T Shirt for Men || T Shirt for Man || Collar T Shirt Style Men (Packs Also Available) (Polo-40-4', 'Lymio Polo T Shirt for Men || T Shirt for Man || Collar T Shirt Style Men (Packs Also Available) (Polo-40-4', 'products/ogLyJ4mdqCAQW27TLfdzVPyFyCOmLpb5lOh7hku2.jpg', '[\"products\\/pYk4F8FlkHvzT5rX5njeQAoNUTMDC9U6tlFIIVL6.jpg\",\"products\\/f31xi86zdbgNy9vQUazhKK1K4x5mQb87F2AcuVnr.jpg\",\"products\\/nOYsP1Gcl5k4dIXemJKLjG9LFpdNp9SfD8htRzge.jpg\",\"products\\/4ZtntgE9A0EgeM8ROAqqoF9XmffRLt4N4SPXe00B.jpg\"]', 1, '2026-04-13 09:07:36', '2026-04-13 09:07:36', 1),
+(2, 6, 2, 'POCO C71, Desert Gold (4GB, 64GB)', 'POCO C71, Desert Gold (4GB, 64GB)', 'products/9KekxFYAimcA3cIkZqyhEHsouVCiJjp65N7lrNIC.jpg', '[\"products\\/UlM4g5MXvHuoQwW4D1wTHneYVnK4pIpfcRxYMlrA.jpg\",\"products\\/voursiDqOHhfbw8DVxOloze9uSnYU20u0xx5rrvD.jpg\",\"products\\/kD6DD62bC1obp8Qn6dsmNJEmpmGJcO11xqSrOjXB.jpg\",\"products\\/efHZQCUAACtlGWXtZ8JNAbDCaZtS2gdQcYu4itYZ.jpg\",\"products\\/cRT2SQm1bPqCzhMGqjyh3ewRYIUSC77MieYKnH2i.jpg\"]', 1, '2026-04-13 09:20:15', '2026-04-13 09:20:15', 1),
+(3, 4, 2, 'realme Buds Air 8,11mm+6mm Dual Dynamic Bass Drivers,58Hrs Playtime', 'realme Buds Air 8,11mm+6mm Dual Dynamic Bass Drivers,58Hrs Playtime, 55dB ANC,6 Mic ENC, 45ms Low Latency, 360° Spatial Audio, Hi-Res LHDC, IP55 Dust & Water Resistant, BT v5.4 (Master Grey)', 'products/vZMFtn35jZR3HAsmEhdNDNLEPntsZg8h7tikrOhG.jpg', '[\"products\\/G0cEcKyPTBf8SNUy1SqwCxvV0xFcsvfQn8Fd2DMB.jpg\",\"products\\/LxWibBO2M4aVO3TDQtOTWtI9r2zg5wl6QI9jTIsf.jpg\",\"products\\/2Q8pFJIRkFD4C81Gce7Fr9pkEgmfeRicbuZwGzmC.jpg\",\"products\\/xaTDHSjdBg63wbIXJxhWytClH4AQfi23OGUCZHs6.jpg\",\"products\\/5uCZeP2iLcayifP0qsgW36pmfmPeUA9c9jHaF9wL.jpg\",\"products\\/H89tRnIczDc2m4UPPCIOGH5BjRXbrlH0oiImNqs8.jpg\",\"products\\/sRvaS9uybeo5B7fuHYHXBwGYLA4htYsIgV0BjFma.jpg\",\"products\\/5q6rCX4T0zsipMF0rw1ZWYkzUtDERbqYDo3CXx8H.jpg\"]', 1, '2026-04-13 09:26:25', '2026-04-16 07:56:47', 1);
 
 -- --------------------------------------------------------
 
@@ -696,9 +684,7 @@ CREATE TABLE `product_types` (
 --
 
 INSERT INTO `product_types` (`id`, `name`, `slug`, `created_at`, `updated_at`) VALUES
-(1, 'Simple Product', 'simple', '2026-03-18 22:10:00', '2026-03-18 22:10:00'),
-(2, 'Variable Products', 'variable', '2026-03-18 22:27:06', '2026-03-18 22:27:06'),
-(3, 'Default', 'default', '2026-03-20 03:33:25', '2026-03-20 03:33:25');
+(1, 'Simple', 'simple', '2026-04-13 09:02:35', '2026-04-13 09:02:35');
 
 -- --------------------------------------------------------
 
@@ -724,28 +710,13 @@ CREATE TABLE `product_variants` (
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `sku`, `name`, `price`, `margin_price`, `stock`, `created_at`, `updated_at`, `attribute_id`) VALUES
-(1, 1, 'MENS-T-SHIRT-BLUE-LMSK', 'XL', 354.00, 407.10, 6, '2026-03-20 23:48:00', '2026-03-27 09:12:09', 2),
-(2, 3, 'BUDS-AIR-7-PRO-GOLDEN-HFZF', 'Golden', 5499.00, 5773.95, 14, '2026-03-20 23:48:00', '2026-03-27 05:47:18', 1),
-(3, 9, 'POVA-CURVE-2-5G-MYSTIC-PURPLE-128-GB-128-GB-8-GB-XELU', '128 GB + 6GB', 27999.00, 29398.95, 11, '2026-03-20 23:48:00', '2026-03-27 09:05:32', 3),
-(4, 9, 'POVA-CURVE-2-5G-MYSTIC-PURPLE-128-GB-256-GB-8GB-YDAD', '128 GB + 8 GB', 29999.00, 31498.95, 7, '2026-03-20 23:48:00', '2026-03-27 05:47:18', 3),
-(5, 9, 'POVA-CURVE-2-5G-MYSTIC-PURPLE-128-GB-256-GB-12GB-PXRK', '256 GB + 8GB', 32999.00, 34648.95, 0, '2026-03-20 23:48:01', '2026-03-27 05:47:18', 3),
-(6, 10, 'ATHLEO-COMFORTABLE-LIGHTWEIGHT-SPORTS-SLIP-ON-RUNNING-SHOES-FOR-MEN-BLACK-5C8G', 'L', 499.00, 523.95, 1, '2026-03-20 23:48:01', '2026-03-27 05:47:18', 2),
-(7, 10, 'ATHLEO-COMFORTABLE-LIGHTWEIGHT-SPORTS-SLIP-ON-RUNNING-SHOES-FOR-MEN-BLUE-1ZMK', 'Black', 599.00, 628.95, 0, '2026-03-20 23:48:01', '2026-03-27 05:47:18', 1),
-(8, 11, 'MEN-REGULAR-FIT-CHECKERED-SPREAD-COLLAR-CASUAL-SHIRT-L-ESGD', 'Blue', 299.00, 313.95, 9, '2026-03-20 23:48:01', '2026-03-27 09:30:34', 1),
-(9, 11, 'MEN-REGULAR-FIT-CHECKERED-SPREAD-COLLAR-CASUAL-SHIRT-M-CBR1', 'L', 349.00, 366.45, 10, '2026-03-20 23:48:01', '2026-03-27 09:30:34', 2),
-(10, 11, 'MEN-REGULAR-FIT-CHECKERED-SPREAD-COLLAR-CASUAL-SHIRT-XL-0IUI', 'Blue', 399.00, 418.95, 5, '2026-03-20 23:48:01', '2026-03-27 09:30:34', 1),
-(12, 7, 'GALAXY-F70E-5G-LIMELIGHT-GREEN-128-GB-128-GB-6GB-TBTW', '128 GB + 6GB', 14999.00, 15748.95, 49, '2026-03-23 08:10:56', '2026-03-27 05:47:18', 3),
-(13, 7, 'GALAXY-F70E-5G-LIMELIGHT-GREEN-128-GB-128-GB-8-GB-SNOI', '128 GB + 8 GB', 16999.00, 17848.95, 20, '2026-03-23 08:10:56', '2026-03-27 05:47:18', 3),
-(14, 8, 'REALME-15-5G-FLOWING-SILVER-256-GB-128-GB-8-GB-YWNI', '128 GB + 8 GB', 29999.00, 31498.95, 10, '2026-03-23 08:14:04', '2026-03-27 05:47:18', 3),
-(15, 8, 'REALME-15-5G-FLOWING-SILVER-256-GB-256-GB-8GB-2VUZ', '256 GB + 8GB', 31999.00, 33598.95, 10, '2026-03-23 08:14:04', '2026-03-27 05:47:18', 3),
-(16, 8, 'REALME-15-5G-FLOWING-SILVER-256-GB-256-GB-8GB-JX9R', '256 GB + 8GB', 34999.00, 36748.95, 10, '2026-03-23 08:14:04', '2026-03-27 05:47:18', 3),
-(17, 2, 'KURTI-L-L9PY', 'L', 323.00, 371.45, 10, '2026-03-23 08:17:34', '2026-03-27 02:58:37', 2),
-(18, 2, 'KURTI-M-4ND8', 'M', 330.00, 379.50, 10, '2026-03-23 08:17:34', '2026-03-27 02:58:37', 2),
-(19, 2, 'KURTI-XL-ARU3', 'XL', 370.00, 425.50, 0, '2026-03-23 08:17:34', '2026-03-27 02:58:37', 2),
-(20, 4, 'GALAXY-S26-ULTRA-5G-COBALT-VIOLET-256-GB-256-GB-12GB-BBBL', '256 GB + 12GB', 139999.00, 146998.95, 7, '2026-03-23 08:19:40', '2026-03-27 05:47:18', 3),
-(21, 4, 'GALAXY-S26-ULTRA-5G-COBALT-VIOLET-256-GB-512-GB-12GB-VG4B', '512 GB + 12GB', 159999.00, 167998.95, 16, '2026-03-23 08:19:40', '2026-03-27 05:47:18', 3),
-(22, 4, 'GALAXY-S26-ULTRA-5G-COBALT-VIOLET-256-GB-1TB-12GB-KIK7', '1TB + 12GB', 189999.00, 199498.95, 13, '2026-03-23 09:36:17', '2026-03-27 05:47:18', 3),
-(23, 12, 'GFDGDFG-M-WVCG', 'M', 2121.00, 2227.05, 0, '2026-04-08 07:06:51', '2026-04-08 07:06:51', 2);
+(4, 1, 'LYMIO-POLO-T-SHIRT-FOR-MEN-T-SHIRT-FOR-MAN-COLLAR-T-SHIRT-STYLE-MEN-PACKS-ALSO-AVAILABLE-POLO-40-4-L-0KRZ', 'L', 429.00, 471.90, 4, '2026-04-13 09:15:31', '2026-04-16 08:24:09', 2),
+(5, 1, 'LYMIO-POLO-T-SHIRT-FOR-MEN-T-SHIRT-FOR-MAN-COLLAR-T-SHIRT-STYLE-MEN-PACKS-ALSO-AVAILABLE-POLO-40-4-M-BVLQ', 'M', 449.00, 493.90, 10, '2026-04-13 09:15:31', '2026-04-13 09:15:31', 2),
+(6, 1, 'LYMIO-POLO-T-SHIRT-FOR-MEN-T-SHIRT-FOR-MAN-COLLAR-T-SHIRT-STYLE-MEN-PACKS-ALSO-AVAILABLE-POLO-40-4-XL-HRJW', 'XL', 479.00, 526.90, 10, '2026-04-13 09:15:31', '2026-04-13 09:15:31', 2),
+(7, 2, 'POCO-C71-DESERT-GOLD-4GB-64GB-4GB-64GB-5T0Q', '4GB + 64GB', 8949.00, 9843.90, 9, '2026-04-13 09:20:17', '2026-04-16 07:56:01', 3),
+(8, 2, 'POCO-C71-DESERT-GOLD-4GB-64GB-8GB-128GB-9YRC', '8GB + 128GB', 12999.00, 14298.90, 10, '2026-04-13 09:20:17', '2026-04-13 09:20:17', 3),
+(9, 3, 'REALME-BUDS-AIR-811MM6MM-DUAL-DYNAMIC-BASS-DRIVERS58HRS-PLAYTIME-55DB-ANC6-MIC-ENC-45MS-LOW-LATENCY-360-SPATIAL-AUDIO-HI-RES-LHDC-IP55-DUST-WATER-RESISTANT-BT-V54-MASTER-GREY-GRAY-ZFNF', 'Gray', 3599.00, 3958.90, 9, '2026-04-13 09:26:26', '2026-04-16 07:56:48', 1),
+(10, 3, 'REALME-BUDS-AIR-811MM6MM-DUAL-DYNAMIC-BASS-DRIVERS58HRS-PLAYTIME-55DB-ANC6-MIC-ENC-45MS-LOW-LATENCY-360-SPATIAL-AUDIO-HI-RES-LHDC-IP55-DUST-WATER-RESISTANT-BT-V54-MASTER-GREY-GOLD-QAYO', 'Gold', 3699.00, 4068.90, 10, '2026-04-13 09:26:26', '2026-04-16 07:56:48', 1);
 
 -- --------------------------------------------------------
 
@@ -759,6 +730,8 @@ CREATE TABLE `ratings` (
   `product_id` bigint(20) UNSIGNED NOT NULL,
   `rating` tinyint(3) UNSIGNED NOT NULL,
   `review` text DEFAULT NULL,
+  `status` enum('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+  `images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`images`)),
   `title` varchar(100) DEFAULT NULL,
   `helpful_yes` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `helpful_no` int(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -771,10 +744,9 @@ CREATE TABLE `ratings` (
 -- Dumping data for table `ratings`
 --
 
-INSERT INTO `ratings` (`id`, `customer_id`, `product_id`, `rating`, `review`, `title`, `helpful_yes`, `helpful_no`, `is_verified_purchase`, `created_at`, `updated_at`) VALUES
-(4, 4, 25, 5, 'Best colors and sizes are good in this price.', 'This product quality is good', 0, 0, 0, '2026-03-19 00:48:20', '2026-03-19 00:48:20'),
-(5, 1, 11, 5, 'sfsdfsadfsd', 'safsdfsd', 0, 0, 0, '2026-03-19 03:00:27', '2026-03-19 03:00:27'),
-(6, 1, 9, 5, 'Look is very Smart.', 'This is good product.', 0, 0, 0, '2026-03-23 06:34:53', '2026-03-23 06:34:53');
+INSERT INTO `ratings` (`id`, `customer_id`, `product_id`, `rating`, `review`, `status`, `images`, `title`, `helpful_yes`, `helpful_no`, `is_verified_purchase`, `created_at`, `updated_at`) VALUES
+(3, 13, 1, 5, 'This product is good quality.', 'approved', '[\"reviews\\/4GkGpEwQeRr3XUnRvRvXJBgWiJj5Uc5hTiB6c3Zq.png\",\"reviews\\/80UFZCoBJO5IncbF8i8nJ7UYAAIqbqjV3OiH8gRn.png\",\"reviews\\/ieK5rDKmIoWbJfDAbqw5gs2oMYfpc8ktvK4MWmUj.png\",\"reviews\\/ALguWMbXNQCA48i3MgYWawZul4pyARYhXfsMQiyK.png\",\"reviews\\/tOvwHnX6nhWh19M83s9slZtKlFdK1dgbOi6dgvNY.png\",\"reviews\\/2lpflMjoJwU5mHEKTgG5AFBMHHFQCndLHSIj8sLY.png\",\"reviews\\/xQGq7DcK6aJGZphCkpVrSfqHSGL6mymG2519H1KW.png\",\"reviews\\/WhaFWQm6RoJbTnsm5g9h7T0q20luZrooBEYwik4E.png\"]', 'Quality', 0, 0, 1, '2026-04-16 06:38:21', '2026-04-16 09:49:50'),
+(4, 1, 1, 2, 'This is very low quality product', 'approved', '[\"reviews\\/bYKAYl09eVdtZd8FHEjsCHKYrhUJZBh2RrZfwSrA.png\",\"reviews\\/BqDqKqC5DWB6rngI7loF7gwxWkVBhKp9miLrKgGL.png\",\"reviews\\/skABCZCEG93HXl02iLlr1pGMH4aVGWsgSLdRz19O.png\",\"reviews\\/5BRFk67DIxXVfEaRMJuVnjL1eXSV2sWOL7fDTlnz.png\",\"reviews\\/wR4NDw46f5uWZtJiu79ypfBCYCaLFkbdjgVWWrCS.png\",\"reviews\\/xHr8KadccKYXmVynckY8fX03EKCLiTSDyzNkgk5z.png\",\"reviews\\/5ZHvd3e2xMkZzTegbOCL3P5Mmn2XM2qjjXP5FdwM.png\",\"reviews\\/6srD21FESzjFdMGk2gtRy6nEFlmL9S6gLxPskSXP.png\",\"reviews\\/Oya9D4GG2F7g3K7RtEpoXuFjThi3XyHV68Adlv0z.png\",\"reviews\\/0coSzAKGGq7EJoh00PuPcwJCYJmKgPsXfwL2RAoD.png\",\"reviews\\/uINGSxEHpWNXNrCafb6lVg8OVNLIMOxSTTUgm6hy.png\"]', 'Quality issue', 0, 0, 1, '2026-04-16 08:25:11', '2026-04-16 09:49:59');
 
 -- --------------------------------------------------------
 
@@ -795,17 +767,12 @@ CREATE TABLE `recent_views` (
 --
 
 INSERT INTO `recent_views` (`id`, `customer_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(10, 9, 9, '2026-03-22 22:49:03', '2026-03-22 22:49:03'),
-(42, 9, 1, '2026-03-23 10:17:44', '2026-03-23 10:17:44'),
-(43, 1, 4, '2026-03-23 10:24:00', '2026-03-23 10:24:00'),
-(81, 10, 3, '2026-03-26 08:35:12', '2026-03-26 08:35:12'),
-(82, 10, 9, '2026-03-26 08:38:42', '2026-03-26 08:38:42'),
-(83, 10, 11, '2026-03-26 08:49:14', '2026-03-26 08:49:14'),
-(94, 1, 3, '2026-03-27 03:54:45', '2026-03-27 03:54:45'),
-(97, 1, 2, '2026-03-27 04:42:03', '2026-03-27 04:42:03'),
-(98, 1, 1, '2026-04-02 06:48:57', '2026-04-02 06:48:57'),
-(99, 1, 11, '2026-04-02 06:50:39', '2026-04-02 06:50:39'),
-(100, 1, 9, '2026-04-02 06:50:45', '2026-04-02 06:50:45');
+(42, 1, 3, '2026-04-16 07:55:42', '2026-04-16 07:55:42'),
+(43, 1, 2, '2026-04-16 07:55:47', '2026-04-16 07:55:47'),
+(52, 13, 2, '2026-04-16 08:08:29', '2026-04-16 08:08:29'),
+(77, 13, 3, '2026-04-16 08:46:11', '2026-04-16 08:46:11'),
+(103, 13, 1, '2026-04-16 09:49:13', '2026-04-16 09:49:13'),
+(104, 1, 1, '2026-04-16 09:49:15', '2026-04-16 09:49:15');
 
 -- --------------------------------------------------------
 
@@ -839,6 +806,32 @@ INSERT INTO `return_orders` (`id`, `order_id`, `customer_id`, `reason`, `status`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `review_replies`
+--
+
+CREATE TABLE `review_replies` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `rating_id` bigint(20) UNSIGNED NOT NULL,
+  `customer_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `admin_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `body` text NOT NULL,
+  `author_name` varchar(255) DEFAULT NULL,
+  `is_seller` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `review_replies`
+--
+
+INSERT INTO `review_replies` (`id`, `rating_id`, `customer_id`, `admin_id`, `body`, `author_name`, `is_seller`, `created_at`, `updated_at`) VALUES
+(1, 3, 13, NULL, 'hfgvbghfghgfh', 'Akshay', 0, '2026-04-16 07:02:43', '2026-04-16 07:02:43'),
+(2, 3, 1, NULL, 'You are buy this product please tell me this quality about.', 'Akshay Sain', 0, '2026-04-16 07:46:03', '2026-04-16 07:46:03');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sales`
 --
 
@@ -855,15 +848,6 @@ CREATE TABLE `sales` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sales`
---
-
-INSERT INTO `sales` (`id`, `name`, `discount`, `type`, `scope`, `scope_id`, `starts_at`, `ends_at`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'Summer Sale', 10.00, 'percent', 'product_type', 2, '2026-03-23 05:46:00', '2026-03-24 10:30:00', 1, '2026-03-23 00:03:11', '2026-03-24 09:20:22'),
-(3, 'Tags Sale', 10.00, 'percent', 'tag', 1, '2026-03-24 05:28:00', '2026-03-25 05:28:00', 1, '2026-03-24 05:28:22', '2026-03-25 05:57:55'),
-(4, 'New sale', 5.00, 'percent', 'tag', 1, '2026-03-27 04:25:00', '2026-04-10 04:25:00', 0, '2026-03-27 04:25:42', '2026-03-30 02:42:14');
 
 -- --------------------------------------------------------
 
@@ -885,7 +869,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('AMrEB02iKlJoJRstVXMwq8q5TW7XURBioj2xOLNX', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiWjVZM1RHWEljNHBBcTVLemxMM1JBQzh5OVdtdDg4b0V5NkY1MGZLdSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9zYWxlcy1yZXBvcnQiO3M6NToicm91dGUiO3M6MTI6InNhbGVzLnJlcG9ydCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6ODoiYWRtaW5faWQiO2k6MjtzOjEwOiJhZG1pbl9uYW1lIjtzOjU6IkFkbWluIjtzOjEyOiJwcm9kdWN0c191cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wcm9kdWN0Ijt9', 1775643458);
+('E7isdPr3y0XAN8zZjAqAUPSyZ9Dbn694cRhp9NbT', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWlpGcDEzMmpCMnZoTHhDc29BcmRYdmlqZnBqazRBMnowNGh4cmhYZyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wcm9kdWN0LzEiO3M6NToicm91dGUiO3M6MTI6InZpZXdfcHJvZHVjdCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MTE6ImN1c3RvbWVyX2lkIjtpOjE7czoxMzoiY3VzdG9tZXJfbmFtZSI7czoxMToiQWtzaGF5IFNhaW4iO30=', 1776332955),
+('Nn7wcfHuTeGPv7UHB1LRDOl2XdvKRry9flaGKduV', 13, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YToxMTp7czo2OiJfdG9rZW4iO3M6NDA6ImpVbDN1dkNIYmt2dTBpeVVkZldQTVFLQ0h3dGJhaVZsQzM1cjZyWHUiO3M6NjoiX2ZsYXNoIjthOjI6e3M6MzoibmV3IjthOjA6e31zOjM6Im9sZCI7YTowOnt9fXM6OToiX3ByZXZpb3VzIjthOjI6e3M6MzoidXJsIjtzOjUxOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vcmV2aWV3cz9zdGF0dXM9YXBwcm92ZWQiO3M6NToicm91dGUiO3M6MTM6ImFkbWluLnJldmlld3MiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxMztzOjU6InN0YXRlIjtzOjQwOiJ6MDl6cFZpcThRdXo4QnZrU0w5U01kWjFBZWQ1bnVnTUp0Rng0YXY5IjtzOjExOiJjdXN0b21lcl9pZCI7aToxMztzOjEzOiJjdXN0b21lcl9uYW1lIjtzOjY6IkFrc2hheSI7czoxMjoicHJvZHVjdHNfdXJsIjtzOjM1OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vcHJvZHVjdCI7czo4OiJhZG1pbl9pZCI7aToyO3M6MTA6ImFkbWluX25hbWUiO3M6NToiQWRtaW4iO3M6MTI6IjJmYV92ZXJpZmllZCI7YjoxO30=', 1776333002),
+('Q2dfQyfH2b5fynFnZ9LJCmzY5FgGm8wEmZTOhUvB', 13, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTo5OntzOjY6Il90b2tlbiI7czo0MDoiNVF4YmZoWEZnbUIwWDV5Unp6cXU3R1pVNjJKVlhJZzhQWmJxYXVlYiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJuZXciO2E6MDp7fXM6Mzoib2xkIjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbiI7czo1OiJyb3V0ZSI7czo1OiJhZG1pbiI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjEzO3M6NToic3RhdGUiO3M6NDA6InowOXpwVmlxOFF1ejhCdmtTTDlTTWRaMUFlZDVudWdNSnRGeDRhdjkiO3M6MTE6ImN1c3RvbWVyX2lkIjtpOjEzO3M6MTM6ImN1c3RvbWVyX25hbWUiO3M6NjoiQWtzaGF5IjtzOjEyOiIyZmFfdmVyaWZpZWQiO2I6MTtzOjEyOiJwcm9kdWN0c191cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9wcm9kdWN0Ijt9', 1776328071);
 
 -- --------------------------------------------------------
 
@@ -925,6 +911,13 @@ CREATE TABLE `tax_or_shipping_charge` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `tax_or_shipping_charge`
+--
+
+INSERT INTO `tax_or_shipping_charge` (`id`, `tax`, `shipping_charge`, `max_charge_for_shipping`, `created_at`, `updated_at`) VALUES
+(1, '0.5', '40', '500', '2026-04-13 02:03:07', '2026-04-16 05:06:41');
+
 -- --------------------------------------------------------
 
 --
@@ -937,6 +930,8 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `google2fa_secret` text DEFAULT NULL,
+  `google2fa_enabled` tinyint(1) NOT NULL DEFAULT 0,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -946,9 +941,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Test User', 'test@example.com', '2026-03-06 20:16:47', '$2y$12$ta52oRzDEOey07MSm9MDTOuYr4f6aYaLmVTyhzlj/3hqOMYSHaW8.', '9LaJjiuaLq', '2026-03-06 20:16:48', '2026-03-06 20:16:48'),
-(2, 'Admin', 'admin@gmail.com', NULL, '$2y$12$2SPaPF8S.E/i/uUCkxrnLuU6t2erUsrr/hcNVsQ6rGffgcCuAL4yO', NULL, '2026-03-06 20:18:31', '2026-03-06 20:18:31');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `google2fa_secret`, `google2fa_enabled`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Test User', 'test@example.com', '2026-03-06 20:16:47', '$2y$12$ta52oRzDEOey07MSm9MDTOuYr4f6aYaLmVTyhzlj/3hqOMYSHaW8.', NULL, 0, '9LaJjiuaLq', '2026-03-06 20:16:48', '2026-03-06 20:16:48'),
+(2, 'Admin', 'admin@gmail.com', NULL, '$2y$12$2SPaPF8S.E/i/uUCkxrnLuU6t2erUsrr/hcNVsQ6rGffgcCuAL4yO', 'eyJpdiI6IjRYR05EdmlpZENDakNFQjVxNWFnZGc9PSIsInZhbHVlIjoid0FTZ2lPNnFiaFZXNEMzamd0WTlMWktGY3gvYU5lZ1dieWFJYkkrNmxSR0tsclV1d3A3bTlsR1ROUm41ZGYyaiIsIm1hYyI6IjIxNjk3ODcxNWUxZjRiOGFjOTBhZDhkYWJhOTFmMDA0YzVmN2Y2Njk3NDc3OTQxZDVkNzMyZDY4ZjFlMjk4ZWMiLCJ0YWciOiIifQ==', 1, NULL, '2026-03-06 20:18:31', '2026-04-16 04:43:58');
 
 -- --------------------------------------------------------
 
@@ -963,13 +958,6 @@ CREATE TABLE `wishlists` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `wishlists`
---
-
-INSERT INTO `wishlists` (`id`, `customer_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(10, 4, 21, '2026-03-18 23:46:32', '2026-03-18 23:46:32');
 
 --
 -- Indexes for dumped tables
@@ -1045,6 +1033,19 @@ ALTER TABLE `coupons`
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `customers_email_unique` (`email`);
+
+--
+-- Indexes for table `customer_verifications`
+--
+ALTER TABLE `customer_verifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `email_otps`
+--
+ALTER TABLE `email_otps`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email_otps_customer_id_foreign` (`customer_id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -1178,6 +1179,15 @@ ALTER TABLE `return_orders`
   ADD KEY `return_orders_customer_id_foreign` (`customer_id`);
 
 --
+-- Indexes for table `review_replies`
+--
+ALTER TABLE `review_replies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `review_replies_rating_id_foreign` (`rating_id`),
+  ADD KEY `review_replies_customer_id_foreign` (`customer_id`),
+  ADD KEY `review_replies_admin_id_foreign` (`admin_id`);
+
+--
 -- Indexes for table `sales`
 --
 ALTER TABLE `sales`
@@ -1233,7 +1243,7 @@ ALTER TABLE `attributes`
 -- AUTO_INCREMENT for table `attribute_values`
 --
 ALTER TABLE `attribute_values`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `banners`
@@ -1245,7 +1255,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1257,13 +1267,25 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `customer_verifications`
+--
+ALTER TABLE `customer_verifications`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `email_otps`
+--
+ALTER TABLE `email_otps`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1275,7 +1297,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `guest_carts`
 --
 ALTER TABLE `guest_carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `import_batches`
@@ -1287,43 +1309,43 @@ ALTER TABLE `import_batches`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `margins`
 --
 ALTER TABLE `margins`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product_tag`
@@ -1335,31 +1357,37 @@ ALTER TABLE `product_tag`
 -- AUTO_INCREMENT for table `product_types`
 --
 ALTER TABLE `product_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `recent_views`
 --
 ALTER TABLE `recent_views`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT for table `return_orders`
 --
 ALTER TABLE `return_orders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `review_replies`
+--
+ALTER TABLE `review_replies`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -1377,7 +1405,7 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `tax_or_shipping_charge`
 --
 ALTER TABLE `tax_or_shipping_charge`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1389,7 +1417,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -1415,6 +1443,12 @@ ALTER TABLE `carts`
   ADD CONSTRAINT `carts_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `carts_product_variant_id_foreign` FOREIGN KEY (`product_variant_id`) REFERENCES `product_variants` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `email_otps`
+--
+ALTER TABLE `email_otps`
+  ADD CONSTRAINT `email_otps_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `margins`
@@ -1450,31 +1484,18 @@ ALTER TABLE `products`
   ADD CONSTRAINT `products_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `product_tag`
---
-ALTER TABLE `product_tag`
-  ADD CONSTRAINT `product_tag_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_tag_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE;
-
---
 -- Constraints for table `product_variants`
 --
 ALTER TABLE `product_variants`
   ADD CONSTRAINT `product_variants_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `recent_views`
+-- Constraints for table `review_replies`
 --
-ALTER TABLE `recent_views`
-  ADD CONSTRAINT `recent_views_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `recent_views_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `return_orders`
---
-ALTER TABLE `return_orders`
-  ADD CONSTRAINT `return_orders_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `return_orders_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
+ALTER TABLE `review_replies`
+  ADD CONSTRAINT `review_replies_admin_id_foreign` FOREIGN KEY (`admin_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `review_replies_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `review_replies_rating_id_foreign` FOREIGN KEY (`rating_id`) REFERENCES `ratings` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

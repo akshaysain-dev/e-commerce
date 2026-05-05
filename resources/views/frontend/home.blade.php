@@ -2,6 +2,76 @@
 
 @section('title', 'My Shop - Best Deals Online')
 
+@section('styles')
+<style>
+    /* CARD */
+.fk-card {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    transition: 0.25s;
+    height: 100%;
+}
+
+.fk-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transform: translateY(-3px);
+}
+
+/* IMAGE FIX */
+.fk-img {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.fk-img img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+/* NAME */
+.fk-name {
+    font-size: 13px;
+    height: 36px;
+    overflow: hidden;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+/* RATING */
+.fk-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 4px;
+}
+
+.fk-rating {
+    background: #388e3c;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.fk-count {
+    font-size: 11px;
+    color: #777;
+}
+
+/* PRICE */
+.fk-price {
+    font-weight: 600;
+    color: #212121;
+    font-size: 14px;
+}
+</style>
+@endsection
+
 @section('content')
 
 {{-- ===== CATEGORY ROW ===== --}}
@@ -215,28 +285,67 @@
 <div id="recent-products-container">
     @if(isset($recentProducts) && $recentProducts->count() > 0)
         <section class="container my-5">
-            <h4 class="fw-bold mb-4">Recently Viewed</h4>
-            <div class="row g-3">
+
+            <h5 class="fw-bold mb-3">Recently Viewed</h5>
+
+            <div class="row gx-3 gy-4">
+
                 @foreach($recentProducts as $product)
+
                     @if($product->firstVariant && $product->firstVariant->price !== null)
-                        <div class="col-lg-2 col-md-3 col-6">
+
+                        @php
+                            $avgRating = round($product->ratings_avg_rating ?? 0, 1);
+                            $totalReviews = $product->ratings_count ?? 0;
+                        @endphp
+
+                        <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
                             <a href="{{ route('view_product', $product->id) }}" class="text-decoration-none text-dark">
-                                <div class="card h-100 border-0 shadow-sm text-center">
-                                    <img src="{{ asset('storage/'.$product->image) }}"
-                                         class="p-2"
-                                         style="height:120px; object-fit:contain;">
-                                    <div class="card-body p-2">
-                                        <p class="small mb-1 fw-bold">{{ Str::limit($product->name, 20) }}</p>
-                                        <span class="text-success fw-bold small">
-                                            ₹{{ number_format($product->firstVariant->margin_price) }}
-                                        </span>
+
+                                <div class="fk-card">
+
+                                    {{-- IMAGE --}}
+                                    <div class="fk-img">
+                                        <img src="{{ asset('storage/'.$product->image) }}">
                                     </div>
+
+                                    {{-- DETAILS --}}
+                                    <div class="p-2">
+
+                                        <div class="fk-name">
+                                            {{ Str::limit($product->name, 45) }}
+                                        </div>
+
+                                        {{-- ⭐ RATING --}}
+                                        <div class="fk-rating-row">
+                                            <span class="fk-rating">
+                                                {{ $avgRating }} ★
+                                            </span>
+                                            <span class="fk-count">
+                                                ({{ $totalReviews }})
+                                            </span>
+                                        </div>
+
+                                        {{-- PRICE --}}
+                                        <div class="fk-price">
+                                            ₹{{ number_format($product->firstVariant->margin_price) }}
+                                        </div>
+
+                                    </div>
+
                                 </div>
+
                             </a>
+
                         </div>
+
                     @endif
+
                 @endforeach
+
             </div>
+
         </section>
     @endif
 </div>
@@ -290,6 +399,35 @@
                             {{ \Illuminate\Support\Str::limit($product->description ?? 'No description available.', 70) }}
                         </p>
                         <div class="mt-auto">
+                            @php
+                                $avgRating = $product->ratings_avg_rating ?? 0;
+                                $avgRating = round($avgRating, 1);
+                                $fullStars = floor($avgRating);
+                                $halfStar = ($avgRating - $fullStars) >= 0.5;
+                                $totalReviews = $product->ratings_count ?? 0;
+                            @endphp
+
+                            <div class="d-flex align-items-center mb-1">
+
+                                {{-- ⭐ Stars --}}
+                                <div class="text-warning me-2" style="font-size:14px;">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if($i <= $fullStars)
+                                            <i class="fas fa-star"></i> {{-- full --}}
+                                        @elseif($halfStar && $i == $fullStars + 1)
+                                            <i class="fas fa-star-half-alt"></i> {{-- half --}}
+                                        @else
+                                            <i class="far fa-star"></i> {{-- empty --}}
+                                        @endif
+                                    @endfor
+                                </div>
+
+                                {{-- ⭐ Rating number --}}
+                                <small class="text-muted">
+                                    {{ $avgRating }} ({{ $totalReviews }})
+                                </small>
+
+                            </div>
                             <p class="fw-bold text-success mb-1">
                                 ₹{{ number_format($product->firstVariant->margin_price) }}
                             </p>

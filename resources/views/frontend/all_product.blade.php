@@ -230,7 +230,34 @@
                                     <button class="btn btn-dark btn-sm flex-fill"
                                             {{ $product->stock == 0 ? 'disabled' : '' }}>Add to Cart</button>
                                 </div>
-                                <span>Rating: {{ number_format($product->averageRating(), 1) }} / 5 Stars</span>
+                                @php
+                                    $avgRating = $product->averageRating() ?? 0;
+                                    $avgRating = round($avgRating, 1);
+                                    $fullStars = floor($avgRating);
+                                    $halfStar = ($avgRating - $fullStars) >= 0.5;
+                                @endphp
+
+                                <div class="d-flex align-items-center">
+
+                                    {{-- ⭐ Stars --}}
+                                    <div class="text-warning me-2" style="font-size:16px;">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            @if($i <= $fullStars)
+                                                <i class="fas fa-star"></i>
+                                            @elseif($halfStar && $i == $fullStars + 1)
+                                                <i class="fas fa-star-half-alt"></i>
+                                            @else
+                                                <i class="far fa-star"></i>
+                                            @endif
+                                        @endfor
+                                    </div>
+
+                                    {{-- ⭐ Text --}}
+                                    <span class="text-muted small">
+                                        {{ $avgRating }} / 5
+                                    </span>
+
+                                </div>
                             </div>
                         </div>
                     </div>

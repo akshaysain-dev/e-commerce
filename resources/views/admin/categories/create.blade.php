@@ -2,8 +2,18 @@
 
 @section('title', 'Add New Category')
 
+@section('styles')
+<style>
+    /* ✅ FOOTER FIX */
+    .page-wrapper {
+        min-height: calc(100vh - 120px);
+    }
+</style>
+@endsection
+
 @section('content')
 
+<div class="page-wrapper">
 <div class="container mt-4 mb-3">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -58,6 +68,7 @@
 
         </div>
     </div>
+</div>
 </div>
 
 @endsection

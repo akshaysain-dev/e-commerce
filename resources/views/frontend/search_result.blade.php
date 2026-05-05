@@ -28,7 +28,7 @@
                         <h6 class="text-dark fw-normal text-truncate mb-1">{{ $product->name }}</h6>
                         
                         <div class="d-flex align-items-center gap-2">
-                            <span class="fw-bold text-dark fs-6">₹{{ number_format($product->firstVariant->price ?? 0) }}</span>
+                            <span class="fw-bold text-dark fs-6">₹{{ number_format($product->firstVariant->margin_price ?? 0) }}</span>
                             <span class="text-success small fw-bold">Special Price</span>
                         </div>
                     </div>
