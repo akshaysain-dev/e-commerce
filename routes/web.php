@@ -31,6 +31,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\RatingReplyController;
 use App\Http\Controllers\AdminReviewController;
+use App\Http\Controllers\Vendor\AuthController as VendorAuth;
 
 
 Route::get('/search', [ProductController::class, 'search'])->name('search.al');
@@ -266,3 +267,40 @@ Route::get('/products/export', [ProductController::class, 'exportCsv'])->name('p
 Route::get('/products/import', [ProductController::class, 'showImportForm'])->name('products.import.form');
 Route::post('/products/import', [ProductController::class, 'importCsv'])->name('products.import');
 Route::get('/products/import/process', [ProductController::class, 'processImport'])->name('products.import.process');
+
+Route::prefix('vendor')->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | Register
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/register', [VendorAuth::class, 'showRegister'])
+            ->name('vendor.register');
+
+    Route::post('/register', [VendorAuth::class, 'register'])
+            ->name('vendor.register.submit');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/login', [VendorAuth::class, 'showLogin'])
+            ->name('vendor.login');
+
+    Route::post('/login', [VendorAuth::class, 'login'])
+            ->name('vendor.login.submit');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Logout
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/logout', [VendorAuth::class, 'logout'])
+            ->name('vendor.logout');
+
+});
