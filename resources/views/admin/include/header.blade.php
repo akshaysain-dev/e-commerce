@@ -28,6 +28,7 @@
                 ['label' => 'Coupons',    'route' => 'admin.coupons.index',      'icon' => '🎟'],
                 ['label' => 'Customers & Orders',  'route' => 'admin_customers',          'icon' => '👥'],
                 ['label' => 'Sales Report',  'route' => 'sales.report',          'icon' => '🔖'],
+                ['label' => 'Vendors',  'route' => 'admin.vendors.index',          'icon' => '👥'],
             ]
         ],
         [

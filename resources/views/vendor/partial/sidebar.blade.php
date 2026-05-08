@@ -4,12 +4,12 @@
         Vendor Panel
     </h4>
 
-    <a href="#">
+    <a href="{{ route('vendor.dashboard') }}">
         <i class="fa fa-dashboard me-2"></i>
         Dashboard
     </a>
 
-    <a href="#">
+    <a href="{{ route('vendor_product') }}">
         <i class="fa fa-box me-2"></i>
         Products
     </a>

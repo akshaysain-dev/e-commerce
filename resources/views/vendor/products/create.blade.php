@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin_add_products') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('vendor_add_products') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <!-- User ID -->

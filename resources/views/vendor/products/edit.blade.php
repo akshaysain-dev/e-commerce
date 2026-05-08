@@ -1,4 +1,4 @@
-@extends('layouts.backend')
+@extends('vendor.layouts.app')
 
 @section('title', 'My Shop')
 
@@ -18,7 +18,7 @@
         </div>
     @endif
 
-    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('vendor.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 

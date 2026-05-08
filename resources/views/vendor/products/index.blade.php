@@ -38,27 +38,27 @@
         <div class="mb-3 mb-md-0">
             <h2 class="fw-bold mb-1 text-dark tracking-tight">Products Inventory</h2>
             <p class="text-muted small mb-0">
-                <span class="badge bg-soft-primary text-primary border border-primary-subtle me-2">Admin Portal</span>
+                <span class="badge bg-soft-primary text-primary border border-primary-subtle me-2">Vebdor Portal</span>
                 Manage your stock, pricing, and product status
             </p>
         </div>
 
         <div class="d-flex flex-wrap gap-2">
-            <a href="{{ route('product-types.index') }}" class="btn btn-outline-primary rounded-pill px-3 shadow-sm hover-lift">
+            {{-- <a href="{{ route('product-types.index') }}" class="btn btn-outline-primary rounded-pill px-3 shadow-sm hover-lift">
                 <i class="bi bi-tag me-1"></i> New Type
             </a>
             <a href="{{ route('admin.attributes.index') }}" class="btn btn-outline-primary rounded-pill px-3 shadow-sm hover-lift">
                 <i class="bi bi-layers me-1"></i> New Variant
-            </a>
+            </a>  --}}
             <a href="{{ route('vendor_create_products') }}" class="btn btn-primary rounded-pill px-4 shadow-sm hover-lift">
                 <i class="bi bi-plus-lg me-1"></i> Add Product
             </a>
-            <a href="{{ route('products.import') }}" class="btn btn-info">
+            {{-- <a href="{{ route('products.import') }}" class="btn btn-info">
                 <i class="bi bi-plus-lg me-1"></i> Import Products CSV
             </a>
             <a href="{{ route('products.export') }}" class="btn btn-success">
                 <i class="fas fa-file-csv"></i> Export Products CSV
-            </a>
+            </a> --}}
         </div>
     </div>
 
@@ -117,10 +117,10 @@
                         </td>
                         <td class="text-end pe-4">
                             <div class="btn-group shadow-sm rounded-3 overflow-hidden">
-                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-white btn-sm px-3 border-end" title="Edit">
+                                <a href="{{ route('vendor.products.edit', $product->id) }}" class="btn btn-white btn-sm px-3 border-end" title="Edit">
                                     Edit
                                 </a>
-                                <a href="{{ route('products.delete', $product->id) }}" 
+                                <a href="{{ route('vendor.products.delete', $product->id) }}" 
                                    class="btn btn-white btn-sm px-3 text-danger" 
                                    onclick="return confirm('Delete this product permanently?');" title="Delete">
                                     Delete

@@ -261,12 +261,23 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::post('/reviews/{id}/reject', [AdminReviewController::class, 'reject'])->name('admin.reviews.reject');
 
         Route::delete('/reviews/{id}', [AdminReviewController::class, 'delete'])->name('admin.reviews.delete');
+    });
 
-        Route::get('/vendors', [VendorManagementController::class, 'index'])->name('admin.vendors.index');
+    Route::prefix('admin')->group(function () {
 
-        Route::post('/vendors/status/{id}', [VendorManagementController::class, 'updateStatus'])->name('admin.vendors.status');
+        Route::get('/vendors',[VendorManagementController::class, 'index'])->name('admin.vendors.index');
 
-        Route::post('/vendors/commission/{id}', [VendorManagementController::class, 'updateCommission'])->name('admin.vendors.commission');
+        Route::get('/vendors/{id}/products',[VendorManagementController::class, 'show'])->name('admin.vendors.show');
+
+        Route::post('/vendors/{id}/status',[VendorManagementController::class, 'updateStatus'])->name('admin.vendors.status');
+
+        Route::post('/vendors/{id}/commission',[VendorManagementController::class, 'updateCommission'])->name('admin.vendors.commission');
+
+        Route::post('/products/{id}/status',[VendorManagementController::class, 'updateProductStatus'])->name('admin.products.status');
+
+        Route::delete('/products/{id}/delete',[VendorManagementController::class, 'deleteProduct'])->name('admin.products.delete');
+
+        Route::delete('/vendors/{id}/delete',[VendorManagementController::class, 'deleteVendor'])->name('admin.vendors.delete');
 
     });
 });
@@ -308,10 +319,10 @@ Route::middleware(['vendor'])->prefix('vendor')->group(function () {
         ->name('vendor.logout');
 
 
-    Route::get('/product', [VendorProductController::class, 'show_'])
+    Route::get('/product', [VendorProductController::class, 'index'])
         ->name('vendor_product');
 
-    Route::get('/product/create', [VendorProductController::class, 'add_product'])
+    Route::get('/product/create', [VendorProductController::class, 'create'])
         ->name('vendor_create_products');
 
     Route::post('/product/add', [VendorProductController::class, 'store'])
