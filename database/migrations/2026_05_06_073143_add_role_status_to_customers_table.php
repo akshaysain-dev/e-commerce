@@ -6,15 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        /* Schema::table('customers', function (Blueprint $table) {
 
-            $table->enum('role', ['admin', 'vendor', 'customer'])
-                ->default('customer');
+            $table->enum('role', [
+                'admin',
+                'vendor',
+                'customer'
+            ])->default('customer');
 
             $table->enum('status', [
                 'pending',
@@ -23,19 +23,18 @@ return new class extends Migration
                 'suspended'
             ])->default('approved');
 
-        });
+        }); */
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        /* Schema::table('customers', function (Blueprint $table) {
 
-            $table->dropColumn('role');
-            $table->dropColumn('status');
+            $table->dropColumn([
+                'role',
+                'status'
+            ]);
 
-        });
+        }); */
     }
 };

@@ -32,6 +32,8 @@ use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\RatingReplyController;
 use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\Vendor\AuthController as VendorAuth;
+use App\Http\Controllers\Admin\VendorManagementController;
+use App\Http\Controllers\Vendor\VendorProductController;
 
 
 Route::get('/search', [ProductController::class, 'search'])->name('search.al');
@@ -260,6 +262,12 @@ Route::middleware([AdminAuth::class])->group(function () {
 
         Route::delete('/reviews/{id}', [AdminReviewController::class, 'delete'])->name('admin.reviews.delete');
 
+        Route::get('/vendors', [VendorManagementController::class, 'index'])->name('admin.vendors.index');
+
+        Route::post('/vendors/status/{id}', [VendorManagementController::class, 'updateStatus'])->name('admin.vendors.status');
+
+        Route::post('/vendors/commission/{id}', [VendorManagementController::class, 'updateCommission'])->name('admin.vendors.commission');
+
     });
 });
 
@@ -268,39 +276,67 @@ Route::get('/products/import', [ProductController::class, 'showImportForm'])->na
 Route::post('/products/import', [ProductController::class, 'importCsv'])->name('products.import');
 Route::get('/products/import/process', [ProductController::class, 'processImport'])->name('products.import.process');
 
+
 Route::prefix('vendor')->group(function () {
 
-    /*
-    |--------------------------------------------------------------------------
-    | Register
-    |--------------------------------------------------------------------------
-    */
-
+    // Register
     Route::get('/register', [VendorAuth::class, 'showRegister'])
-            ->name('vendor.register');
+        ->name('vendor.register');
 
     Route::post('/register', [VendorAuth::class, 'register'])
-            ->name('vendor.register.submit');
+        ->name('vendor.register.submit');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Login
-    |--------------------------------------------------------------------------
-    */
-
+    // Login
     Route::get('/login', [VendorAuth::class, 'showLogin'])
-            ->name('vendor.login');
+        ->name('vendor.login');
 
     Route::post('/login', [VendorAuth::class, 'login'])
-            ->name('vendor.login.submit');
+        ->name('vendor.login.submit');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Logout
-    |--------------------------------------------------------------------------
-    */
+});
 
+
+
+Route::middleware(['vendor'])->prefix('vendor')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', [VendorAuth::class, 'dashboard'])
+        ->name('vendor.dashboard');
+
+    // Logout
     Route::post('/logout', [VendorAuth::class, 'logout'])
-            ->name('vendor.logout');
+        ->name('vendor.logout');
+
+
+    Route::get('/product', [VendorProductController::class, 'show_'])
+        ->name('vendor_product');
+
+    Route::get('/product/create', [VendorProductController::class, 'add_product'])
+        ->name('vendor_create_products');
+
+    Route::post('/product/add', [VendorProductController::class, 'store'])
+        ->name('vendor_add_products');
+
+    Route::get('/products/edit/{id}', [VendorProductController::class, 'edit'])
+        ->name('vendor.products.edit');
+
+    Route::get('/products/delete/{id}', [VendorProductController::class, 'delete'])
+        ->name('vendor.products.delete');
+
+    Route::put('/products/update/{id}', [VendorProductController::class, 'update'])
+        ->name('vendor.products.update');
+
+    Route::get(
+        '/stripe/connect',
+        [VendorAuth::class, 'connectStripe']
+    )->name('vendor.stripe.connect');
+
+    Route::get(
+        '/stripe/success',
+        [VendorAuth::class, 'stripeSuccess']
+    )->name('vendor.stripe.success');
+
+    Route::get('/stripe/return', [VendorAuth::class, 'stripeReturn'])
+    ->name('vendor.stripe.return');
 
 });

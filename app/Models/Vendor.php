@@ -17,7 +17,9 @@ class Vendor extends Model
         'bank_name',
         'account_number',
         'ifsc_code',
-        'commission_rate'
+        'commission_rate',
+        'stripe_account_id',
+        'stripe_onboarded'
     ];
 
     public function user()

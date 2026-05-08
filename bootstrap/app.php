@@ -3,7 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\Middleware\AdminAuth;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,15 +10,19 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append(AdminAuth::class);
+
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminAuth::class,
+            'customer' => \App\Http\Middleware\CustomerAuth::class,
+            'vendor' => \App\Http\Middleware\VendorMiddleware::class,
+        ]);
+
     })
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->append(CustomerAuth::class);
-    })
-    ->withMiddleware(function (Middleware $middleware): void {
-        //
-    })
+
     ->withExceptions(function (Exceptions $exceptions): void {
+
         //
+
     })->create();
