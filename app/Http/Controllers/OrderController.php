@@ -18,6 +18,8 @@ use Carbon\Carbon;
 use App\Models\TaxOrShippingCharge;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderPlacedMail;
+use App\Models\Product;
+use App\Models\Vendor;
 
 class OrderController extends Controller
 {
@@ -87,6 +89,53 @@ class OrderController extends Controller
         $taxAmount   = ($subtotal * $taxRate) / 100;
         $totalAmount = $subtotal + $taxAmount + $shippingCharge;
 
+        $adminEarning = 0;
+        $vendorEarning = 0;
+
+        $orderItemsData = [];
+
+        foreach ($cartItems as $item) {
+
+            $product = $item->product;
+
+            $vendor = Vendor::where('user_id', $product->user_id)->first();
+
+            $commissionRate = $vendor->commission_rate ?? 10;
+
+            $itemPrice = $item->price;
+
+            $qty = $item->quantity;
+
+            $itemTotal = $itemPrice * $qty;
+
+            $commissionAmount = ($itemTotal * $commissionRate) / 100;
+
+            $vendorAmount = $itemTotal - $commissionAmount;
+
+            $adminEarning += $commissionAmount;
+
+            $vendorEarning += $vendorAmount;
+
+            $orderItemsData[] = [
+
+                'product_id' => $product->id,
+
+                'vendor_id' => $vendor?->id,
+
+                'quantity' => $qty,
+
+                'price' => $itemPrice,
+
+                'main_price' => $item->variant->price,
+
+                'admin_commission' => $commissionAmount,
+
+                'vendor_amount' => $vendorAmount,
+
+                'payout_status' => 'pending',
+            ];
+        }
+
         // ── Step 4: Finalize Pending Order ───────────────────
         $tempOrderId  = 'ORD-' . strtoupper(uniqid());
         $pendingOrder = [
@@ -99,6 +148,12 @@ class OrderController extends Controller
             'discount_amount' => $discountAmount,
             'coupon_code'     => $appliedCoupon,
             'temp_order_id'   => $tempOrderId,
+
+            'admin_earning' => $adminEarning,
+            'vendor_earning' => $vendorEarning,
+            'stripe_transfer_group' => 'GROUP_' . strtoupper(uniqid()),
+            
+            'order_items_data' => $orderItemsData,
         ];
 
         session(['pending_order' => $pendingOrder]);

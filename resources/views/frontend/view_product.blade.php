@@ -544,28 +544,28 @@
             </div>
 
             <div class="row g-2"> 
-                @foreach($related_products as $product)
-                    @if($product->firstVariant && $product->firstVariant->margin_price !== null)
+                @foreach($related_products as $relatedProduct)
+                    @if($relatedProduct->firstVariant && $relatedProduct->firstVariant->margin_price !== null)
                         <div class="col-xl-2 col-lg-3 col-md-4 col-6">
                             <div class="card h-100 border-0 rounded-0 p-2 position-relative flipkart-card">
                                 <div class="d-flex align-items-center justify-content-center mb-2" style="height: 180px;">
-                                    <img src="{{ asset('storage/'.$product->image) }}" 
+                                    <img src="{{ asset('storage/'.$relatedProduct->image) }}" 
                                          class="img-fluid h-100 w-100" 
                                          style="object-fit: contain;"
-                                         alt="{{ $product->name }}">
+                                         alt="{{ $relatedProduct->name }}">
                                 </div>
 
                                 <div class="card-body p-1 text-start">
-                                    <p class="mb-1 text-dark small fw-normal text-truncate" title="{{ $product->name }}">
-                                        {{ $product->name }}
+                                    <p class="mb-1 text-dark small fw-normal text-truncate" title="{{ $relatedProduct->name }}">
+                                        {{ $relatedProduct->name }}
                                     </p>
                                     
                                     <div class="d-flex align-items-center gap-2">
                                         <span class="fw-bold text-dark fs-6">
-                                            ₹{{ number_format($product->firstVariant->margin_price) }}
+                                            ₹{{ number_format($relatedProduct->firstVariant->margin_price) }}
                                         </span>
                                         <!-- <span class="text-muted small text-decoration-line-through">
-                                            ₹{{ number_format($product->firstVariant->price + 500) }}
+                                            ₹{{ number_format($relatedProduct->firstVariant->price + 500) }}
                                         </span>
                                         <span class="text-success small fw-bold">
                                             25% off
@@ -581,7 +581,7 @@
                                     </div> -->
                                 </div> 
                                 
-                                <a href="{{ route('view_product', $product->id) }}" class="stretched-link"></a>
+                                <a href="{{ route('view_product', $relatedProduct->id) }}" class="stretched-link"></a>
                             </div>
                         </div>
                     @endif

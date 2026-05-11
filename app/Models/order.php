@@ -44,6 +44,9 @@ class order extends Model
         'coupon_code',      
         'discount_amount',
 		'delivery_date',
+        'admin_earning',
+        'vendor_earning',
+        'stripe_transfer_group',
     ];
 
 }

@@ -27,6 +27,10 @@ class orderItem extends Model
         'product_variant_id',
         'quantity',
         'price',
-        'main_price'
+        'main_price',
+        'admin_commission',
+        'vendor_amount',
+        'payout_status',
+        'vendor_id'
     ];
 }
