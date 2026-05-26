@@ -9,7 +9,7 @@
         Welcome,
 
         <strong>
-            {{ auth()->user()->name ?? 'Vendor' }}
+            {{ auth('vendor')->user()->name ?? 'Vendor' }}
         </strong>
 
     </div>

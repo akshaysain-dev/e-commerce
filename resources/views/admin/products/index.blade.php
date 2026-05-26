@@ -79,6 +79,7 @@
                     <tr class="text-uppercase small fw-bold text-muted">
                         <th class="ps-4 py-3">Product</th>
                         <th class="py-3">Category</th>
+                        <th class="py-3">Added By</th>
                         <th class="py-3">Status</th>
                         <th class="py-3 text-end pe-4">Actions</th>
                     </tr>
@@ -102,6 +103,11 @@
                         <td>
                             <span class="badge bg-soft-info text-info rounded-pill px-3">
                                 {{ $product->category->name ?? 'Uncategorized' }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge bg-soft-info text-primary rounded-pill px-3">
+                                {{ $product->user->name ?? 'Admin' }}
                             </span>
                         </td>
                         <td>

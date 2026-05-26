@@ -188,7 +188,7 @@
 
 
         <button class="btn btn-primary">Update Product</button>
-        <a href="{{ route('admin_product') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('vendor_product') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 

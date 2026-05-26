@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 use Stripe\Stripe;
 use Stripe\Account;
 use Stripe\AccountLink;
+use App\Models\Product;
+use App\Models\orderItem;
 
 class AuthController extends Controller
 {
@@ -236,20 +238,47 @@ class AuthController extends Controller
         $user = Auth::guard('vendor')->user();
 
         if (!$user) {
+
             return redirect()->route('vendor.login');
         }
 
-        $vendor = \App\Models\Vendor::where('user_id', $user->id)->first();
+        $vendor = Vendor::where('user_id', $user->id)->first();
 
         if (!$vendor) {
+
             return redirect()->route('vendor.login')
                 ->with('error', 'Vendor profile not found.');
         }
 
-        $totalProducts = 0;
-        $totalOrders   = 0;
-        $totalSales    = 0;
-        $earnings      = 0;
+        $totalProducts = Product::where('user_id', $user->id)->count();
+
+        $orderItems = OrderItem::with([
+                'order',
+                'product'
+            ])
+            ->where('vendor_id', $vendor->id)
+            ->latest()
+            ->get();
+
+        $totalOrders = $orderItems->count();
+
+        $totalSales = $orderItems->sum(function ($item) {
+
+            return $item->price * $item->quantity;
+
+        });
+
+        $earnings = $orderItems->sum('vendor_amount');
+
+        $recentOrders = $orderItems->take(5);
+
+        $pendingOrders = $orderItems
+            ->where('order.status', 'pending')
+            ->count();
+
+        $completedOrders = $orderItems
+            ->where('order.status', 'paid')
+            ->count();
 
         return view('vendor.dashboard', compact(
             'user',
@@ -257,10 +286,12 @@ class AuthController extends Controller
             'totalProducts',
             'totalOrders',
             'totalSales',
-            'earnings'
+            'earnings',
+            'recentOrders',
+            'pendingOrders',
+            'completedOrders'
         ));
     }
-
 
     public function connectStripe()
     {

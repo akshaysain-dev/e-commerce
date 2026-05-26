@@ -34,6 +34,8 @@ use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\Vendor\AuthController as VendorAuth;
 use App\Http\Controllers\Admin\VendorManagementController;
 use App\Http\Controllers\Vendor\VendorProductController;
+use App\Http\Controllers\Vendor\VendorProfileController;
+use App\Http\Controllers\VendorEarningController;
 
 
 Route::get('/search', [ProductController::class, 'search'])->name('search.al');
@@ -349,5 +351,12 @@ Route::middleware(['vendor'])->prefix('vendor')->group(function () {
 
     Route::get('/stripe/return', [VendorAuth::class, 'stripeReturn'])
     ->name('vendor.stripe.return');
+
+    Route::get('/earnings', [VendorEarningController::class, 'index'])
+    ->name('vendor.earnings');
+
+    Route::get('/vendor/profile', [VendorProfileController::class, 'index'])->name('vendor.profile');
+
+    Route::post('/vendor/profile/update', [VendorProfileController::class, 'update'])->name('vendor.profile.update');
 
 });

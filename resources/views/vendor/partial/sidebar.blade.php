@@ -14,17 +14,17 @@
         Products
     </a>
 
-    <a href="#">
+    <!-- <a href="#">
         <i class="fa fa-shopping-cart me-2"></i>
         Orders
-    </a>
+    </a> -->
 
-    <a href="#">
+    <a href="{{ route('vendor.earnings') }}">
         <i class="fa fa-money-bill me-2"></i>
         Earnings
     </a>
 
-    <a href="#">
+    <a href="{{ route('vendor.profile') }}">
         <i class="fa fa-user me-2"></i>
         Profile
     </a>

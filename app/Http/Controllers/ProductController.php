@@ -19,8 +19,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function show_(){
-        $products = Product::with(['category', 'firstVariant'])->orderBy('created_at', 'desc')->paginate(8);
+    public function show_()
+    {
+        $products = Product::with(['category', 'firstVariant', 'user'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(8);
+
         return view('admin.products.index', compact('products'));
     }
 
