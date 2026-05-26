@@ -393,7 +393,7 @@
 
                 </thead>
 
-                <tbody>
+                <tbody id="liveOrdersTable">
 
                     @forelse($recentOrders as $item)
 
@@ -475,3 +475,75 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+
+function loadLiveOrders()
+{
+    $.ajax({
+
+        url: "{{ route('vendor.live.orders') }}",
+
+        type: "GET",
+
+        success: function(response)
+        {
+            let html = '';
+
+            response.forEach(function(item){
+
+                html += `
+                
+                <tr>
+
+                    <td class="ps-4">
+                        ${item.order?.unique_order_id ?? '-'}
+                    </td>
+
+                    <td>
+                        ${item.product?.name ?? '-'}
+                    </td>
+
+                    <td>
+                        ₹${parseFloat(item.vendor_amount).toFixed(2)}
+                    </td>
+
+                    <td>
+                        <span class="badge bg-success">
+                            ${item.order?.status ?? '-'}
+                        </span>
+                    </td>
+
+                    <td class="pe-4">
+
+                        ${new Date(item.created_at).toLocaleDateString('en-GB', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                        })}
+
+                    </td>
+
+                </tr>
+                
+                `;
+            });
+
+            $('#liveOrdersTable').html(html);
+        }
+
+    });
+}
+
+loadLiveOrders();
+
+setInterval(function(){
+
+    loadLiveOrders();
+
+}, 5000);
+
+</script>
+
+@endpush

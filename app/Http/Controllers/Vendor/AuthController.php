@@ -446,4 +446,22 @@ class AuthController extends Controller
             ->route('vendor.dashboard')
             ->with('success', 'Stripe connected successfully.');
     }
+
+    public function liveOrders()
+    {
+        $user = Auth::guard('vendor')->user();
+
+        $vendor = Vendor::where('user_id', $user->id)->first();
+
+        $orders = OrderItem::with([
+                'order',
+                'product'
+            ])
+            ->where('vendor_id', $vendor->id)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return response()->json($orders);
+    }
 }

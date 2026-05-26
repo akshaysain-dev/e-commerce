@@ -359,4 +359,9 @@ Route::middleware(['vendor'])->prefix('vendor')->group(function () {
 
     Route::post('/vendor/profile/update', [VendorProfileController::class, 'update'])->name('vendor.profile.update');
 
+    Route::get('/vendor/live-orders', [VendorAuth::class, 'liveOrders'])
+    ->name('vendor.live.orders');
+
+    Route::post('/vendor/orders/update-status/{id}', [VendorEarningController::class, 'updateStatus'])
+    ->name('vendor.orders.update.status');
 });

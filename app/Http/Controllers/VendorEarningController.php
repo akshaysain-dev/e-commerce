@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\OrderItem;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Vendor;
+use Illuminate\Http\Request;
 
 class VendorEarningController extends Controller
 {
@@ -35,5 +37,24 @@ class VendorEarningController extends Controller
             'orderItems',
             'totalEarning'
         ));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+
+            'status' => 'required'
+
+        ]);
+
+        $order = Order::findOrFail($id);
+
+        $order->status = $request->status;
+
+        $order->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Order status updated successfully.');
     }
 }
